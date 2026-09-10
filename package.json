@@ -1,0 +1,13 @@
+{
+  "name": "tamil-scheme-navigator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node dev.js",
+    "start": "node dev.js",
+    "server": "node server/src/index.js",
+    "client": "npm --prefix client run dev",
+    "build": "npm --prefix client run build"
+  }
+}

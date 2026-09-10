@@ -1,0 +1,95 @@
+[
+  {
+    "id": "usr-admin-01",
+    "name": "Dr. S. Kabilan (TN Welfare Admin)",
+    "email": "admin@tamilnadugov.in",
+    "mobile": "9876543210",
+    "passwordHash": "$2a$10$I9HQi9pwvrLcTA7svzPT3.SrvVtLOyJP2wARJ/WkFfnx2pNLkR7fO",
+    "preferredLanguage": "ta",
+    "role": "ADMIN",
+    "profile": {
+      "name": "Dr. S. Kabilan",
+      "age": 42,
+      "gender": "MALE",
+      "state": "Tamil Nadu",
+      "district": "Chennai",
+      "taluk": "Mylapore",
+      "village": "RA Puram",
+      "annualIncome": 650000,
+      "occupation": "Government Employee",
+      "isStudent": false,
+      "community": "BC",
+      "hasDisability": false
+    },
+    "savedSchemes": [
+      "tn-cmchis-health-insurance",
+      "tn-needs-entrepreneur"
+    ],
+    "createdAt": "2026-08-17T16:20:22.800Z"
+  },
+  {
+    "id": "usr-citizen-01",
+    "name": "Kavitha Selvam",
+    "email": "kavitha@example.com",
+    "mobile": "9443322110",
+    "passwordHash": "$2a$10$Mzx7EqODW/wvkolvIGaydeJt4YrX/dvfeXjjTdjire.fv4h4lS9lG",
+    "preferredLanguage": "ta",
+    "role": "CITIZEN",
+    "profile": {
+      "name": "Kavitha Selvam",
+      "age": 20,
+      "gender": "FEMALE",
+      "dateOfBirth": "2006-04-15",
+      "state": "Tamil Nadu",
+      "district": "Madurai",
+      "taluk": "Madurai North",
+      "village": "Tallakulam",
+      "annualIncome": 180000,
+      "occupation": "Student",
+      "employmentStatus": "Unemployed",
+      "bplStatus": true,
+      "isStudent": true,
+      "currentEducation": "UG",
+      "collegeCourse": "B.Sc Computer Science",
+      "studiedInGovtSchool6to12": true,
+      "isFirstGraduateInFamily": true,
+      "community": "MBC",
+      "caste": "Vanniyar",
+      "religion": "Hindu",
+      "hasDisability": false,
+      "maritalStatus": "Unmarried",
+      "hasLandholding": true
+    },
+    "savedSchemes": [
+      "tn-pudhumai-penn-scheme",
+      "tn-first-graduate-tuition",
+      "tn-post-matric-scholarship"
+    ],
+    "createdAt": "2026-08-17T16:20:22.882Z"
+  },
+  {
+    "id": "usr-75f51ec8-b4fe-445a-947a-fa82a5327e4d",
+    "name": "adthi",
+    "email": "sathyapriyans39@gmail.com",
+    "mobile": "345788008654",
+    "passwordHash": "$2a$10$rkmIyXmh8tyAtGEfOjza..SHDSxhoj2uGjpT.CNENk25XrJ7cEzFm",
+    "preferredLanguage": "en",
+    "role": "CITIZEN",
+    "profile": {
+      "name": "adthi",
+      "age": 22,
+      "gender": "FEMALE",
+      "state": "Tamil Nadu",
+      "district": "Chennai",
+      "annualIncome": 200000,
+      "occupation": "Student",
+      "isStudent": true,
+      "studiedInGovtSchool6to12": true,
+      "isFirstGraduateInFamily": false,
+      "community": "BC",
+      "hasDisability": false
+    },
+    "savedSchemes": [],
+    "createdAt": "2026-08-17T16:32:53.755Z"
+  }
+]
