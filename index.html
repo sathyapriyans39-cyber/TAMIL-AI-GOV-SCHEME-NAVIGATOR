@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamil AI Government Scheme Navigator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #123b5d;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 22px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: #f39c12;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #123b5d, #2878a8);
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .hero h2 {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: auto;
+            display: flex;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            padding: 15px 25px;
+            border: none;
+            background: #f39c12;
+            color: white;
+            cursor: pointer;
+            border-radius: 0 5px 5px 0;
+            font-size: 16px;
+        }
+
+        section {
+            padding: 45px 8%;
+        }
+
+        section h2 {
+            text-align: center;
+            color: #123b5d;
+            margin-bottom: 30px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .card h3 {
+            color: #123b5d;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .card button {
+            margin-top: 18px;
+            padding: 10px 18px;
+            border: none;
+            background: #2878a8;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chat-section {
+            background: #eaf2f8;
+        }
+
+        .chat-box {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+        }
+
+        .messages {
+            height: 180px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .user-message {
+            text-align: right;
+            margin: 10px;
+            color: #123b5d;
+        }
+
+        .bot-message {
+            text-align: left;
+            margin: 10px;
+            color: #2878a8;
+        }
+
+        .chat-input {
+            display: flex;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+        }
+
+        .chat-input button {
+            padding: 12px 20px;
+            border: none;
+            background: #123b5d;
+            color: white;
+            cursor: pointer;
+        }
+
+        .eligibility {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+        }
+
+        .eligibility input,
+        .eligibility select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .eligibility button {
+            width: 100%;
+            padding: 13px;
+            background: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eef7ee;
+            display: none;
+        }
+
+        footer {
+            background: #123b5d;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media(max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 5px;
+            }
+
+            .hero h2 {
+                font-size: 28px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-box input,
+            .search-box button {
+                border-radius: 5px;
+                margin: 3px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Tamil AI Scheme Navigator</h1>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#schemes">Schemes</a>
+        <a href="#eligibility">Eligibility</a>
+        <a href="#assistant">AI Assistant</a>
+    </nav>
+</header>
+
+
+<section class="hero" id="home">
+
+    <h2>Tamil AI Government Scheme Navigator</h2>
+
+    <p>
+        Find Government Schemes Easily Using AI
+    </p>
+
+    <div class="search-box">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search for a government scheme..."
+        >
+
+        <button onclick="searchScheme()">
+            Search
+        </button>
+    </div>
+
+    <p id="searchResult"></p>
+
+</section>
+
+
+<section id="schemes">
+
+    <h2>Popular Government Schemes</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Education Schemes</h3>
+
+            <p>
+                Find scholarships and educational
+                assistance schemes.
+            </p>
+
+            <button onclick="showMessage('Education schemes selected')">
+                Explore
+            </button>
+        </div>
+
+
+        <div class="card">
+            <h3>Women Welfare</h3>
+
+            <p>
+                Find government schemes designed
+                to support women.
+            </p>
+
+            <button onclick="showMessage('Women welfare schemes selected')">
+                Explore
+            </button>
+        </div>
+
+
+        <div class="card">
+            <h3>Farmer Schemes</h3>
+
+            <p>
+                Find agricultural subsidies and
+                farmer welfare schemes.
+            </p>
+
+            <button onclick="showMessage('Farmer schemes selected')">
+                Explore
+            </button>
+        </div>
+
+
+        <div class="card">
+            <h3>Employment</h3>
+
+            <p>
+                Find employment, training and
+                skill-development schemes.
+            </p>
+
+            <button onclick="showMessage('Employment schemes selected')">
+                Explore
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="chat-section" id="assistant">
+
+    <h2>AI Government Scheme Assistant</h2>
+
+    <div class="chat-box">
+
+        <div class="messages" id="messages">
+
+            <div class="bot-message">
+                Hello! I am your AI Government Scheme Assistant.
+                Ask me about government schemes.
+            </div>
+
+        </div>
+
+        <div class="chat-input">
+
+            <input
+                type="text"
+                id="chatInput"
+                placeholder="Ask your question..."
+            >
+
+            <button onclick="sendMessage()">
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section id="eligibility">
+
+    <h2>Scheme Eligibility Matcher</h2>
+
+    <div class="eligibility">
+
+        <label>Age</label>
+
+        <input
+            type="number"
+            id="age"
+            placeholder="Enter your age"
+        >
+
+
+        <label>Occupation</label>
+
+        <select id="occupation">
+
+            <option value="">Select occupation</option>
+
+            <option>Student</option>
+            <option>Farmer</option>
+            <option>Employee</option>
+            <option>Business</option>
+            <option>Unemployed</option>
+
+        </select>
+
+
+        <label>Annual Income</label>
+
+        <input
+            type="number"
+            id="income"
+            placeholder="Enter annual income"
+        >
+
+
+        <button onclick="checkEligibility()">
+            Check Eligibility
+        </button>
+
+
+        <div id="result"></div>
+
+    </div>
+
+</section>
+
+
+<section>
+
+    <h2>Other Services</h2>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>e-Sevai Locator</h3>
+
+            <p>
+                Find nearby e-Sevai centres and
+                access government services.
+            </p>
+
+            <button onclick="showMessage('e-Sevai Locator opened')">
+                Find Centre
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Saved Schemes</h3>
+
+            <p>
+                Save important government schemes
+                for future reference.
+            </p>
+
+            <button onclick="showMessage('Saved schemes opened')">
+                View Saved
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Notifications</h3>
+
+            <p>
+                Get updates about newly added and
+                updated government schemes.
+            </p>
+
+            <button onclick="showMessage('Notifications opened')">
+                View Updates
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Admin Dashboard</h3>
+
+            <p>
+                Manage schemes, users and
+                government scheme information.
+            </p>
+
+            <button onclick="showMessage('Admin dashboard opened')">
+                Admin Login
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <p>
+        © 2026 Tamil AI Government Scheme Navigator
+    </p>
+
+    <p>
+        AI-Powered Access to Government Schemes
+    </p>
+
+</footer>
+
+
+<script>
+
+function searchScheme() {
+
+    let search = document.getElementById("searchInput").value;
+
+    let result = document.getElementById("searchResult");
+
+    if (search.trim() === "") {
+
+        result.innerHTML = "Please enter a scheme name.";
+
+    } else {
+
+        result.innerHTML =
+            "Searching for: " + search;
+
+    }
+
+}
+
+
+function sendMessage() {
+
+    let input = document.getElementById("chatInput");
+
+    let message = input.value.trim();
+
+    let messages = document.getElementById("messages");
+
+    if (message === "") {
+        return;
+    }
+
+    messages.innerHTML +=
+        '<div class="user-message">' +
+        message +
+        '</div>';
+
+    messages.innerHTML +=
+        '<div class="bot-message">' +
+        'I can help you find government schemes. ' +
+        'Please provide your age, occupation and income for eligibility matching.' +
+        '</div>';
+
+    input.value = "";
+
+    messages.scrollTop = messages.scrollHeight;
+
+}
+
+
+function checkEligibility() {
+
+    let age =
+        document.getElementById("age").value;
+
+    let occupation =
+        document.getElementById("occupation").value;
+
+    let income =
+        document.getElementById("income").value;
+
+    let result =
+        document.getElementById("result");
+
+    if (age === "" ||
+        occupation === "" ||
+        income === "") {
+
+        result.style.display = "block";
+
+        result.innerHTML =
+            "Please fill all the details.";
+
+        return;
+    }
+
+    result.style.display = "block";
+
+    result.innerHTML =
+        "<strong>Eligibility Check Completed</strong><br><br>" +
+        "Age: " + age + "<br>" +
+        "Occupation: " + occupation + "<br>" +
+        "Annual Income: ₹" + income +
+        "<br><br>" +
+        "Your details can now be matched with available government schemes.";
+}
+
+
+function showMessage(message) {
+
+    alert(message);
+
+}
+
+</script>
+
+</body>
+</html>
