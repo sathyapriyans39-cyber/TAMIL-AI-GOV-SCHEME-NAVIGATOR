@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Scheme Eligibility Matcher</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f2f6fa;
+            color: #222;
+        }
+
+        header {
+            background: #0b1f33;
+            color: white;
+            padding: 22px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 15px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+
+        .form-box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+        }
+
+        .form-box h2 {
+            color: #0b1f33;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select {
+            padding: 11px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #245a78;
+        }
+
+        .button-area {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        button {
+            background: #f28c28;
+            color: white;
+            border: none;
+            padding: 13px 30px;
+            border-radius: 7px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        #result {
+            margin-top: 30px;
+        }
+
+        .result-title {
+            background: #0b1f33;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+
+        .scheme-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            border-left: 6px solid #245a78;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .scheme-card h3 {
+            color: #0b1f33;
+            margin-bottom: 10px;
+        }
+
+        .scheme-card p {
+            margin: 7px 0;
+            line-height: 1.5;
+        }
+
+        .eligible {
+            color: green;
+            font-weight: bold;
+        }
+
+        .not-found {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .note {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        @media(max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            .container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Tamil AI Government Scheme Navigator</h1>
+    <p>Government Scheme Eligibility Matcher</p>
+</header>
+
+<div class="container">
+
+    <div class="form-box">
+
+        <h2>Check Your Eligibility</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" placeholder="Enter your age">
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="state">State</label>
+                <select id="state">
+                    <option value="">Select State</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category">
+                    <option value="">Select Category</option>
+                    <option value="General">General</option>
+                    <option value="OBC">OBC</option>
+                    <option value="SC">SC</option>
+                    <option value="ST">ST</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="occupation">Occupation</label>
+                <select id="occupation">
+                    <option value="">Select Occupation</option>
+                    <option value="Student">Student</option>
+                    <option value="Farmer">Farmer</option>
+                    <option value="Entrepreneur">Entrepreneur</option>
+                    <option value="Employee">Employee</option>
+                    <option value="Unemployed">Unemployed</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="income">Annual Family Income (₹)</label>
+                <input type="number" id="income" placeholder="Example: 200000">
+            </div>
+
+            <div class="form-group">
+                <label for="education">Education</label>
+                <select id="education">
+                    <option value="">Select Education</option>
+                    <option value="School">School</option>
+                    <option value="UG">Undergraduate</option>
+                    <option value="PG">Postgraduate</option>
+                    <option value="Diploma">Diploma</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="farmer">Are you a Farmer?</label>
+                <select id="farmer">
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="button-area">
+            <button onclick="checkEligibility()">
+                Find Eligible Schemes
+            </button>
+        </div>
+
+    </div>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+
+const schemes = [
+
+    {
+        name: "Student Scholarship Scheme",
+        category: "Education",
+        occupation: "Student",
+        minAge: 16,
+        maxAge: 30,
+        maxIncome: 300000,
+        description: "Financial assistance for eligible students pursuing higher education.",
+        benefit: "Educational financial assistance.",
+        reason: "You are a student and your age and income match the demo criteria."
+    },
+
+    {
+        name: "Farmer Support Scheme",
+        category: "Agriculture",
+        occupation: "Farmer",
+        minAge: 18,
+        maxAge: 70,
+        maxIncome: 500000,
+        description: "Support program for eligible farmers.",
+        benefit: "Agricultural financial support.",
+        reason: "You are identified as a farmer and your income falls within the demo criteria."
+    },
+
+    {
+        name: "Women Entrepreneurship Support",
+        category: "Women Entrepreneurship",
+        gender: "Female",
+        occupation: "Entrepreneur",
+        minAge: 18,
+        maxAge: 60,
+        maxIncome: 1000000,
+        description: "Support for women interested in starting or developing a business.",
+        benefit: "Business and entrepreneurship support.",
+        reason: "You are a woman entrepreneur and match the demo age and income criteria."
+    },
+
+    {
+        name: "Youth Skill Development Scheme",
+        category: "Skill Development",
+        minAge: 18,
+        maxAge: 35,
+        occupation: "Unemployed",
+        maxIncome: 400000,
+        description: "Skill development support for eligible unemployed youth.",
+        benefit: "Skill training and employment support.",
+        reason: "You are within the youth age group and selected unemployed as your occupation."
+    },
+
+    {
+        name: "SC/ST Educational Assistance",
+        category: "Education",
+        minAge: 16,
+        maxAge: 35,
+        categories: ["SC", "ST"],
+        occupation: "Student",
+        maxIncome: 400000,
+        description: "Educational assistance for eligible SC/ST students.",
+        benefit: "Education-related financial assistance.",
+        reason: "You are a student belonging to an eligible category."
+    }
+
+];
+
+function checkEligibility() {
+
+    const age = Number(document.getElementById("age").value);
+    const gender = document.getElementById("gender").value;
+    const state = document.getElementById("state").value;
+    const category = document.getElementById("category").value;
+    const occupation = document.getElementById("occupation").value;
+    const income = Number(document.getElementById("income").value);
+    const education = document.getElementById("education").value;
+    const farmer = document.getElementById("farmer").value;
+
+    const result = document.getElementById("result");
+
+    if (!age || !gender || !state || !category || !occupation || !income) {
+
+        result.innerHTML = `
+            <div class="not-found">
+                <h3>Please complete the required fields.</h3>
+                <p>Enter your age, gender, state, category, occupation and income.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    const eligibleSchemes = schemes.filter(scheme => {
+
+        let eligible = true;
+
+        if (scheme.minAge && age < scheme.minAge) {
+            eligible = false;
+        }
+
+        if (scheme.maxAge && age > scheme.maxAge) {
+            eligible = false;
+        }
+
+        if (scheme.maxIncome && income > scheme.maxIncome) {
+            eligible = false;
+        }
+
+        if (scheme.gender && scheme.gender !== gender) {
+            eligible = false;
+        }
+
+        if (scheme.occupation && scheme.occupation !== occupation) {
+            eligible = false;
+        }
+
+        if (scheme.categories && !scheme.categories.includes(category)) {
+            eligible = false;
+        }
+
+        return eligible;
+    });
+
+    if (eligibleSchemes.length === 0) {
+
+        result.innerHTML = `
+            <div class="not-found">
+                <h3>No Matching Schemes Found</h3>
+                <p>
+                    We could not find a scheme matching the information
+                    entered. Try changing the details or search all schemes.
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+    let output = `
+        <div class="result-title">
+            <h2>Potentially Matching Schemes</h2>
+            <p>${eligibleSchemes.length} scheme(s) matched your details.</p>
+        </div>
+    `;
+
+    eligibleSchemes.forEach(scheme => {
+
+        output += `
+            <div class="scheme-card">
+
+                <h3>${scheme.name}</h3>
+
+                <p>
+                    <strong>Category:</strong>
+                    ${scheme.category}
+                </p>
+
+                <p>
+                    <strong>Description:</strong>
+                    ${scheme.description}
+                </p>
+
+                <p>
+                    <strong>Benefit:</strong>
+                    ${scheme.benefit}
+                </p>
+
+                <p>
+                    <strong>Why it matched:</strong>
+                    ${scheme.reason}
+                </p>
+
+                <p class="eligible">
+                    ✓ Your details match the demo eligibility criteria.
+                </p>
+
+                <button onclick="viewScheme('${scheme.name}')">
+                    View Scheme Details
+                </button>
+
+            </div>
+        `;
+    });
+
+    output += `
+        <div class="note">
+            <strong>Important:</strong>
+            This eligibility matcher is a demonstration feature.
+            A match does not guarantee eligibility. Final eligibility,
+            benefits and application requirements must be verified with
+            the relevant official government department or portal.
+        </div>
+    `;
+
+    result.innerHTML = output;
+}
+
+function viewScheme(name) {
+
+    alert(
+        "Scheme: " + name +
+        "\n\nFor the real project, this button can open the complete scheme details page."
+    );
+
+}
+
+</script>
+
+</body>
+</html>
