@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tamil AI Government Scheme Navigator</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f7fa;
+    color: #222;
+}
+
+/* HEADER */
+
+header {
+    background: #0b1f33;
+    color: white;
+    padding: 18px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 22px;
+}
+
+/* NOTIFICATION */
+
+.notification {
+    position: relative;
+    cursor: pointer;
+    font-size: 28px;
+}
+
+.notification-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: red;
+    color: white;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* LAYOUT */
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+}
+
+/* TABS */
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tabs button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #245a78;
+    color: white;
+}
+
+.tabs button:hover {
+    background: #163e55;
+}
+
+/* SECTIONS */
+
+.section {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.section h2 {
+    color: #0b1f33;
+    margin-bottom: 20px;
+}
+
+/* FORM */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+input,
+textarea,
+select {
+    padding: 11px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.full {
+    grid-column: 1 / 3;
+}
+
+.add-btn {
+    background: #f28c28;
+    color: white;
+    border: none;
+    padding: 13px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.add-btn:hover {
+    background: #d97414;
+}
+
+/* SCHEME CARD */
+
+.scheme-card {
+    border: 1px solid #ddd;
+    border-left: 5px solid #245a78;
+    padding: 18px;
+    margin-bottom: 15px;
+    border-radius: 7px;
+}
+
+.scheme-card h3 {
+    color: #0b1f33;
+    margin-bottom: 8px;
+}
+
+.scheme-card p {
+    margin: 6px 0;
+    line-height: 1.5;
+}
+
+/* POPUP */
+
+.popup {
+    position: fixed;
+    right: 25px;
+    top: 80px;
+    width: 350px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.25);
+    padding: 20px;
+    display: none;
+    z-index: 1000;
+    border-left: 6px solid #f28c28;
+}
+
+.popup h3 {
+    color: #0b1f33;
+    margin-bottom: 10px;
+}
+
+.popup p {
+    line-height: 1.5;
+    color: #555;
+}
+
+.popup button {
+    margin-top: 15px;
+    padding: 9px 15px;
+    border: none;
+    border-radius: 5px;
+    background: #245a78;
+    color: white;
+    cursor: pointer;
+}
+
+/* NOTIFICATIONS */
+
+.notification-card {
+    padding: 18px;
+    margin-bottom: 15px;
+    background: #eef6ff;
+    border-left: 5px solid #245a78;
+    border-radius: 7px;
+}
+
+.notification-card h3 {
+    color: #0b1f33;
+    margin-bottom: 8px;
+}
+
+.notification-card p {
+    line-height: 1.5;
+}
+
+.new {
+    display: inline-block;
+    background: #f28c28;
+    color: white;
+    padding: 3px 7px;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-left: 5px;
+}
+
+.empty {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+}
+
+/* MOBILE */
+
+@media(max-width:700px) {
+
+    header {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 16px;
+    }
+
+    .container {
+        width: 95%;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: 1;
+    }
+
+    .popup {
+        width: calc(100% - 30px);
+        right: 15px;
+        top: 70px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>Tamil AI Government Scheme Navigator</h1>
+
+    <div class="notification"
+         onclick="showNotifications()">
+
+        🔔
+
+        <span
+            class="notification-count"
+            id="notificationCount">
+            0
+        </span>
+
+    </div>
+
+</header>
+
+
+<div class="container">
+
+    <div class="tabs">
+
+        <button onclick="showSection('admin')">
+            Admin Dashboard
+        </button>
+
+        <button onclick="showSection('schemes')">
+            Schemes
+        </button>
+
+        <button onclick="showSection('notifications')">
+            Notifications
+        </button>
+
+    </div>
+
+
+    <!-- ADMIN DASHBOARD -->
+
+    <div id="admin" class="section">
+
+        <h2>Admin Dashboard</h2>
+
+        <p>
+            Add a new government scheme. A notification will
+            automatically be created for users.
+        </p>
+
+        <br>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>Scheme Name</label>
+
+                <input
+                    type="text"
+                    id="schemeName"
+                    placeholder="Enter scheme name">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Department</label>
+
+                <input
+                    type="text"
+                    id="department"
+                    placeholder="Example: Education Department">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Category</label>
+
+                <select id="category">
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option>
+                        Education
+                    </option>
+
+                    <option>
+                        Agriculture
+                    </option>
+
+                    <option>
+                        Women Welfare
+                    </option>
+
+                    <option>
+                        Employment
+                    </option>
+
+                    <option>
+                        Business
+                    </option>
+
+                    <option>
+                        Health
+                    </option>
+
+                    <option>
+                        Housing
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Government Level</label>
+
+                <select id="government">
+
+                    <option value="">
+                        Select
+                    </option>
+
+                    <option>
+                        Tamil Nadu Government
+                    </option>
+
+                    <option>
+                        Central Government
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>Description</label>
+
+                <textarea
+                    id="description"
+                    placeholder="Enter scheme description">
+                </textarea>
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>Benefits</label>
+
+                <textarea
+                    id="benefits"
+                    placeholder="Enter scheme benefits">
+                </textarea>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="add-btn"
+            onclick="addScheme()">
+
+            + Add New Scheme
+
+        </button>
+
+    </div>
+
+
+    <!-- SCHEMES -->
+
+    <div
+        id="schemes"
+        class="section"
+        style="display:none;">
+
+        <h2>Government Schemes</h2>
+
+        <div id="schemeList"></div>
+
+    </div>
+
+
+    <!-- NOTIFICATIONS -->
+
+    <div
+        id="notifications"
+        class="section"
+        style="display:none;">
+
+        <h2>User Notifications</h2>
+
+        <div id="notificationList"></div>
+
+    </div>
+
+</div>
+
+
+<!-- POPUP -->
+
+<div
+    id="notificationPopup"
+    class="popup">
+
+    <h3 id="popupTitle"></h3>
+
+    <p id="popupMessage"></p>
+
+    <button onclick="closePopup()">
+        View Notification
+    </button>
+
+</div>
+
+
+<script>
+
+/* ================================
+   LOAD SAVED DATA
+================================ */
+
+let schemes =
+    JSON.parse(
+        localStorage.getItem("schemes")
+    ) || [];
+
+
+let notifications =
+    JSON.parse(
+        localStorage.getItem("notifications")
+    ) || [];
+
+
+/* ================================
+   SAVE DATA
+================================ */
+
+function saveData() {
+
+    localStorage.setItem(
+        "schemes",
+        JSON.stringify(schemes)
+    );
+
+    localStorage.setItem(
+        "notifications",
+        JSON.stringify(notifications)
+    );
+
+}
+
+
+/* ================================
+   ADD NEW SCHEME
+================================ */
+
+function addScheme() {
+
+    const name =
+        document
+        .getElementById("schemeName")
+        .value
+        .trim();
+
+
+    const department =
+        document
+        .getElementById("department")
+        .value
+        .trim();
+
+
+    const category =
+        document
+        .getElementById("category")
+        .value;
+
+
+    const government =
+        document
+        .getElementById("government")
+        .value;
+
+
+    const description =
+        document
+        .getElementById("description")
+        .value
+        .trim();
+
+
+    const benefits =
+        document
+        .getElementById("benefits")
+        .value
+        .trim();
+
+
+    if (
+        name === "" ||
+        department === "" ||
+        category === "" ||
+        government === "" ||
+        description === ""
+    ) {
+
+        alert(
+            "Please fill all required fields."
+        );
+
+        return;
+
+    }
+
+
+    /* CREATE SCHEME */
+
+    const scheme = {
+
+        id: Date.now(),
+
+        name: name,
+
+        department: department,
+
+        category: category,
+
+        government: government,
+
+        description: description,
+
+        benefits: benefits,
+
+        date:
+            new Date()
+            .toLocaleDateString("en-IN")
+
+    };
+
+
+    schemes.unshift(scheme);
+
+
+    /* ================================
+       AUTOMATIC NOTIFICATION
+    ================================= */
+
+    const notification = {
+
+        id: Date.now() + 1,
+
+        title:
+            "New Government Scheme Added",
+
+        message:
+            `"${name}" has been added to the Tamil AI Government Scheme Navigator. Click to view the new scheme.`,
+
+        schemeId:
+            scheme.id,
+
+        date:
+            new Date()
+            .toLocaleDateString("en-IN"),
+
+        read: false
+
+    };
+
+
+    notifications.unshift(
+        notification
+    );
+
+
+    saveData();
+
+
+    /* CLEAR FORM */
+
+    document
+        .getElementById("schemeName")
+        .value = "";
+
+    document
+        .getElementById("department")
+        .value = "";
+
+    document
+        .getElementById("category")
+        .value = "";
+
+    document
+        .getElementById("government")
+        .value = "";
+
+    document
+        .getElementById("description")
+        .value = "";
+
+    document
+        .getElementById("benefits")
+        .value = "";
+
+
+    /* UPDATE UI */
+
+    displaySchemes();
+
+    displayNotifications();
+
+    updateNotificationCount();
+
+
+    /* SHOW POPUP */
+
+    showPopup(
+        notification
+    );
+
+
+    alert(
+        "Scheme added successfully!\n\nA notification has automatically been created."
+    );
+
+}
+
+
+/* ================================
+   DISPLAY SCHEMES
+================================ */
+
+function displaySchemes() {
+
+    const list =
+        document.getElementById(
+            "schemeList"
+        );
+
+
+    if (schemes.length === 0) {
+
+        list.innerHTML =
+            `<div class="empty">
+                No schemes available.
+            </div>`;
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    schemes.forEach(
+        scheme => {
+
+            list.innerHTML += `
+
+                <div class="scheme-card">
+
+                    <h3>
+                        ${scheme.name}
+                    </h3>
+
+                    <p>
+                        <strong>Department:</strong>
+                        ${scheme.department}
+                    </p>
+
+                    <p>
+                        <strong>Category:</strong>
+                        ${scheme.category}
+                    </p>
+
+                    <p>
+                        <strong>Government:</strong>
+                        ${scheme.government}
+                    </p>
+
+                    <p>
+                        <strong>Description:</strong>
+                        ${scheme.description}
+                    </p>
+
+                    <p>
+                        <strong>Benefits:</strong>
+                        ${scheme.benefits}
+                    </p>
+
+                    <p>
+                        <strong>Added:</strong>
+                        ${scheme.date}
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+/* ================================
+   DISPLAY NOTIFICATIONS
+================================ */
+
+function displayNotifications() {
+
+    const list =
+        document.getElementById(
+            "notificationList"
+        );
+
+
+    if (notifications.length === 0) {
+
+        list.innerHTML =
+            `<div class="empty">
+                No notifications available.
+            </div>`;
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    notifications.forEach(
+        notification => {
+
+            list.innerHTML += `
+
+                <div class="notification-card">
+
+                    <h3>
+
+                        ${notification.title}
+
+                        ${
+                            !notification.read
+                            ? '<span class="new">NEW</span>'
+                            : ''
+                        }
+
+                    </h3>
+
+                    <p>
+                        ${notification.message}
+                    </p>
+
+                    <small>
+                        ${notification.date}
+                    </small>
+
+                    <br><br>
+
+                    <button
+                        onclick="openSchemeFromNotification(${notification.schemeId})">
+
+                        View Scheme
+
+                    </button>
+
+                    <button
+                        onclick="markRead(${notification.id})">
+
+                        Mark as Read
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+/* ================================
+   NOTIFICATION COUNT
+================================ */
+
+function updateNotificationCount() {
+
+    const unread =
+        notifications.filter(
+            notification =>
+                !notification.read
+        ).length;
+
+
+    document.getElementById(
+        "notificationCount"
+    ).textContent = unread;
+
+}
+
+
+/* ================================
+   POPUP
+================================ */
+
+function showPopup(notification) {
+
+    document.getElementById(
+        "popupTitle"
+    ).textContent =
+        notification.title;
+
+
+    document.getElementById(
+        "popupMessage"
+    ).textContent =
+        notification.message;
+
+
+    document.getElementById(
+        "notificationPopup"
+    ).style.display =
+        "block";
+
+}
+
+
+function closePopup() {
+
+    document.getElementById(
+        "notificationPopup"
+    ).style.display =
+        "none";
+
+}
+
+
+/* ================================
+   SHOW NOTIFICATIONS
+================================ */
+
+function showNotifications() {
+
+    showSection(
+        "notifications"
+    );
+
+}
+
+
+/* ================================
+   MARK READ
+================================ */
+
+function markRead(id) {
+
+    const notification =
+        notifications.find(
+            notification =>
+                notification.id === id
+        );
+
+
+    if (notification) {
+
+        notification.read = true;
+
+    }
+
+
+    saveData();
+
+    displayNotifications();
+
+    updateNotificationCount();
+
+}
+
+
+/* ================================
+   OPEN SCHEME
+================================ */
+
+function openSchemeFromNotification(
+    schemeId
+) {
+
+    const scheme =
+        schemes.find(
+            scheme =>
+                scheme.id === schemeId
+        );
+
+
+    if (!scheme) {
+
+        alert(
+            "Scheme not found."
+        );
+
+        return;
+
+    }
+
+
+    alert(
+
+        "SCHEME DETAILS\n\n" +
+
+        scheme.name +
+
+        "\n\nDepartment: " +
+        scheme.department +
+
+        "\n\nCategory: " +
+        scheme.category +
+
+        "\n\n" +
+        scheme.description +
+
+        "\n\nBenefits: " +
+        scheme.benefits
+
+    );
+
+}
+
+
+/* ================================
+   SECTION NAVIGATION
+================================ */
+
+function showSection(sectionId) {
+
+    document.getElementById(
+        "admin"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "schemes"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "notifications"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        sectionId
+    ).style.display = "block";
+
+
+    if (sectionId === "schemes") {
+
+        displaySchemes();
+
+    }
+
+
+    if (sectionId === "notifications") {
+
+        displayNotifications();
+
+    }
+
+}
+
+
+/* ================================
+   INITIAL LOAD
+================================ */
+
+displaySchemes();
+
+displayNotifications();
+
+updateNotificationCount();
+
+</script>
+
+</body>
+</html>
