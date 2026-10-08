@@ -24,7 +24,9 @@ import {
   Square,
   Play,
   Pause,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Loader2,
+  AlertTriangle
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
@@ -45,7 +47,8 @@ export function AiAssistant({ initialPrompt = '', onSelectScheme }) {
         ? 'வணக்கம்! நான் உங்கள் தமிழ் அரசு திட்டங்கள் AI வழிகாட்டி. தமிழ்நாடு மற்றும் மத்திய அரசு திட்டங்கள், தகுதி வரம்புகள், தேவையான சான்றிதழ்கள், மற்றும் விண்ணப்பிக்கும் முறைகள் பற்றி என்னிடம் கேளுங்கள்.'
         : 'Vanakkam! I am your Tamil AI Government Scheme Assistant. Ask me anything about Tamil Nadu and Central Government welfare schemes, eligibility rules, required certificates, and application procedures.',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      schemes: []
+      schemes: [],
+      language: lang
     }
   ]);
 
@@ -57,19 +60,26 @@ export function AiAssistant({ initialPrompt = '', onSelectScheme }) {
   
   // Voice Synthesis State
   const [speakingMsgId, setSpeakingMsgId] = useState(null);
+  const [audioLoadingId, setAudioLoadingId] = useState(null);
+  const [ttsError, setTtsError] = useState('');
   const [isPaused, setIsPaused] = useState(false);
   const [speechProgress, setSpeechProgress] = useState(null);
   const [speechRate, setSpeechRate] = useState(0.95);
 
-  const messagesEndRef = useRef(null);
+  const chatFeedRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatFeedRef.current) {
+      chatFeedRef.current.scrollTo({
+        top: chatFeedRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   };
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, loading, speechProgress]);
+  }, [messages, loading]);
 
   // If initialPrompt changes from an external button click
   useEffect(() => {
@@ -78,6 +88,22 @@ export function AiAssistant({ initialPrompt = '', onSelectScheme }) {
       handleSendMessage(initialPrompt);
     }
   }, [initialPrompt]);
+
+  // Sync initial welcome message when app language toggles
+  useEffect(() => {
+    setMessages(prev => prev.map(m => {
+      if (m.id === 'welcome-1') {
+        return {
+          ...m,
+          text: lang === 'ta' 
+            ? 'வணக்கம்! நான் உங்கள் தமிழ் அரசு திட்டங்கள் AI வழிகாட்டி. தமிழ்நாடு மற்றும் மத்திய அரசு திட்டங்கள், தகுதி வரம்புகள், தேவையான சான்றிதழ்கள், மற்றும் விண்ணப்பிக்கும் முறைகள் பற்றி என்னிடம் கேளுங்கள்.'
+            : 'Welcome! I am your Tamil AI Government Scheme Assistant. Ask me anything about Tamil Nadu and Central Government welfare schemes, eligibility rules, required certificates, and application procedures.',
+          language: lang
+        };
+      }
+      return m;
+    }));
+  }, [lang]);
 
   // Clean up speech on unmount
   useEffect(() => {
@@ -94,6 +120,8 @@ export function AiAssistant({ initialPrompt = '', onSelectScheme }) {
     // Stop active speech playback if any
     speechSynthesizer.stop();
     setSpeakingMsgId(null);
+    setAudioLoadingId(null);
+    setTtsError('');
 
     const userMessage = {
       id: `user-${Date.now()}`,
@@ -127,6 +155,7 @@ export function AiAssistant({ initialPrompt = '', onSelectScheme }) {
         const botMessage = {
           id: `bot-${Date.now()}`,
           sender: 'bot',
+          language: lang,
           text: data.data.response || data.data.answer || (lang === 'ta' ? 'தகவல் பெறப்பட்டது.' : 'Information retrieved.'),
           schemes: data.data.matchedSchemes || data.data.relevantSchemes || [],
           documents: data.data.requiredDocs || data.data.documentsRequired || [],
@@ -169,6 +198,7 @@ export function AiAssistant({ initialPrompt = '', onSelectScheme }) {
     // Stop speech synthesizer if speaking
     speechSynthesizer.stop();
     setSpeakingMsgId(null);
+    setAudioLoadingId(null);
     setMicError('');
 
     speechRecognizer.start({
@@ -197,32 +227,51 @@ export function AiAssistant({ initialPrompt = '', onSelectScheme }) {
     });
   };
 
-  // Natural High-Clarity Speech Synthesizer Trigger
+  // Sarvam AI Speech Synthesizer Trigger
   const handleToggleSpeech = (msgId, text) => {
-    if (speakingMsgId === msgId) {
+    setTtsError('');
+
+    if (speakingMsgId === msgId || audioLoadingId === msgId) {
       speechSynthesizer.stop();
       setSpeakingMsgId(null);
+      setAudioLoadingId(null);
       setIsPaused(false);
       setSpeechProgress(null);
       return;
     }
 
+    const targetMsg = messages.find(m => m.id === msgId);
+    const msgLang = targetMsg?.language || lang;
+
+    setAudioLoadingId(msgId);
+
     speechSynthesizer.speak({
       text,
-      lang,
+      lang: msgLang,
       rate: speechRate,
       pitch: 1.0,
       onStart: () => {
+        setAudioLoadingId(null);
         setSpeakingMsgId(msgId);
         setIsPaused(false);
       },
       onEnd: () => {
+        setAudioLoadingId(null);
         setSpeakingMsgId(null);
         setIsPaused(false);
         setSpeechProgress(null);
       },
       onProgress: (prog) => {
+        setAudioLoadingId(null);
         setSpeechProgress(prog);
+      },
+      onError: (errMessage) => {
+        console.error('Sarvam TTS Error:', errMessage);
+        setAudioLoadingId(null);
+        setSpeakingMsgId(null);
+        setIsPaused(false);
+        setSpeechProgress(null);
+        setTtsError(errMessage || 'Sarvam AI Text-to-Speech failed');
       }
     });
   };
@@ -339,14 +388,26 @@ export function AiAssistant({ initialPrompt = '', onSelectScheme }) {
         </div>
       )}
 
+      {/* Sarvam TTS Error Banner */}
+      {ttsError && (
+        <div className="px-4 py-2.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-center justify-between animate-fadeIn">
+          <div className="flex items-center space-x-2">
+            <AlertTriangle className="w-4 h-4 text-red-500 shrink-0" />
+            <span><strong>Sarvam AI TTS Error:</strong> {ttsError}</span>
+          </div>
+          <button onClick={() => setTtsError('')} className="ml-2 text-red-400 hover:text-red-600 font-bold text-sm">✕</button>
+        </div>
+      )}
+
       {/* Main Chat Box Container */}
       <div className="bg-white rounded-3xl border border-slate-200 shadow-md flex flex-col h-[650px] overflow-hidden">
         
         {/* Messages Feed */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 bg-slate-50/50">
+        <div ref={chatFeedRef} className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 bg-slate-50/50">
           {messages.map((msg) => {
             const isBot = msg.sender === 'bot';
             const isSpeakingThis = speakingMsgId === msg.id;
+            const isLoadingThis = audioLoadingId === msg.id;
 
             return (
               <div 
@@ -381,14 +442,22 @@ export function AiAssistant({ initialPrompt = '', onSelectScheme }) {
                       {isBot && (
                         <button
                           onClick={() => handleToggleSpeech(msg.id, msg.text)}
+                          disabled={isLoadingThis}
                           className={`flex items-center space-x-1.5 px-3 py-1 rounded-lg font-bold transition-all ${
                             isSpeakingThis 
                               ? 'bg-red-50 text-red-600 border border-red-200 shadow-xs' 
+                              : isLoadingThis
+                              ? 'bg-amber-50 text-amber-700 border border-amber-200 animate-pulse cursor-wait'
                               : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/80 shadow-2xs'
                           }`}
-                          title={isSpeakingThis ? 'Stop voice playback' : 'Listen with High-Clarity Voice Narration'}
+                          title={isSpeakingThis ? 'Stop Sarvam voice playback' : 'Listen with Sarvam AI Bulbul Voice Narration'}
                         >
-                          {isSpeakingThis ? (
+                          {isLoadingThis ? (
+                            <>
+                              <Loader2 className="w-3.5 h-3.5 animate-spin text-amber-600" />
+                              <span>{lang === 'ta' ? 'குரல் உருவாகிறது...' : 'Generating Sarvam Audio...'}</span>
+                            </>
+                          ) : isSpeakingThis ? (
                             <>
                               <Square className="w-3.5 h-3.5 fill-red-600" />
                               <span>{lang === 'ta' ? 'நிறுத்து' : 'Stop Audio'}</span>
@@ -396,7 +465,7 @@ export function AiAssistant({ initialPrompt = '', onSelectScheme }) {
                           ) : (
                             <>
                               <Volume2 className="w-3.5 h-3.5 text-emerald-700" />
-                              <span>{lang === 'ta' ? 'குரலில் கேள்' : 'Listen Answer'}</span>
+                              <span>{lang === 'ta' ? 'சரவம் AI குரலில் கேள்' : 'Listen with Sarvam AI'}</span>
                             </>
                           )}
                         </button>
@@ -472,7 +541,7 @@ export function AiAssistant({ initialPrompt = '', onSelectScheme }) {
             </div>
           )}
 
-          <div ref={messagesEndRef} />
+          <div />
         </div>
 
         {/* Suggested Prompts Strip */}

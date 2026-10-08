@@ -278,41 +278,13 @@ export class HybridSpeechSynthesizer {
     this.speaking = true;
     this.paused = false;
 
-    // Check voice support
-    const isTamil = lang === 'ta' || lang.startsWith('ta');
-    const nativeTamilVoice = isTamil ? selectOptimalVoice('ta') : null;
-
-    if (isTamil && !nativeTamilVoice) {
-      // Use HD Audio stream for 100% clear native Tamil
-      this.mode = 'stream';
-      if (this.onStart) this.onStart();
-      this._playStreamChunk();
-    } else if (!isTamil && typeof window !== 'undefined' && window.speechSynthesis) {
-      // Use Web Speech for English if available
-      this.mode = 'native';
-      if (this.onStart) this.onStart();
-      this._speakNativeChunk();
-    } else {
-      // Stream mode fallback
-      this.mode = 'stream';
-      if (this.onStart) this.onStart();
-      this._playStreamChunk();
-    }
+    // Use Sarvam AI TTS audio stream
+    this.mode = 'stream';
+    if (this.onStart) this.onStart();
+    this._playStreamChunk();
   }
 
-  _preloadNextChunk() {
-    const nextIndex = this.currentChunkIndex + 1;
-    if (nextIndex < this.queue.length) {
-      const nextText = this.queue[nextIndex];
-      const nextStreamUrl = `${API_BASE}/ai/tts/stream?text=${encodeURIComponent(nextText)}&language=${this.lang}`;
-      this.nextAudio = new Audio(nextStreamUrl);
-      this.nextAudio.preload = 'auto';
-    } else {
-      this.nextAudio = null;
-    }
-  }
-
-  _playStreamChunk() {
+  async _playStreamChunk() {
     if (!this.speaking || this.currentChunkIndex >= this.queue.length) {
       this.stop();
       if (this.onEnd) this.onEnd();
@@ -320,7 +292,6 @@ export class HybridSpeechSynthesizer {
     }
 
     const chunkText = this.queue[this.currentChunkIndex];
-    const streamUrl = `${API_BASE}/ai/tts/stream?text=${encodeURIComponent(chunkText)}&language=${this.lang}`;
 
     if (this.onProgress) {
       this.onProgress({
@@ -330,41 +301,54 @@ export class HybridSpeechSynthesizer {
       });
     }
 
-    // Use preloaded audio if available for smooth playback transition
-    let audio;
-    if (this.nextAudio && this.currentChunkIndex > 0) {
-      audio = this.nextAudio;
-      this.nextAudio = null;
-    } else {
-      audio = new Audio(streamUrl);
+    try {
+      const response = await fetch(`${API_BASE}/voice/speak`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: chunkText,
+          language: this.lang
+        })
+      });
+
+      if (!response.ok) {
+        const errorJson = await response.json().catch(() => ({}));
+        const errorMsg = errorJson.message || `Sarvam AI TTS Error (${response.status})`;
+        throw new Error(errorMsg);
+      }
+
+      const audioBlob = await response.blob();
+      const objectUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(objectUrl);
+      audio.playbackRate = this.rate;
+      this.currentAudio = audio;
+
+      audio.onended = () => {
+        URL.revokeObjectURL(objectUrl);
+        if (!this.speaking) return;
+        this.currentChunkIndex++;
+        this._playStreamChunk();
+      };
+
+      audio.onerror = (e) => {
+        URL.revokeObjectURL(objectUrl);
+        console.warn('Audio segment playback notice:', e);
+        if (!this.speaking) return;
+        this.currentChunkIndex++;
+        this._playStreamChunk();
+      };
+
+      await audio.play().catch((playErr) => {
+        console.warn('Audio play request notice:', playErr.message);
+        if (!this.speaking) return;
+        this.currentChunkIndex++;
+        this._playStreamChunk();
+      });
+    } catch (err) {
+      console.error('Sarvam TTS error:', err.message);
+      if (this.onError) this.onError(err.message);
+      this.stop();
     }
-
-    audio.playbackRate = this.rate;
-    this.currentAudio = audio;
-
-    // Preload chunk after this one
-    this._preloadNextChunk();
-
-    audio.onended = () => {
-      if (!this.speaking) return;
-      this.currentChunkIndex++;
-      this._playStreamChunk();
-    };
-
-    audio.onerror = (e) => {
-      console.warn('Audio stream playback warning, skipping chunk:', e);
-      if (!this.speaking) return;
-      this.currentChunkIndex++;
-      this._playStreamChunk();
-    };
-
-    audio.play().catch((err) => {
-      console.warn('Audio play request interrupted/blocked:', err.message);
-      if (!this.speaking) return;
-      // Advance to next chunk or finish
-      this.currentChunkIndex++;
-      this._playStreamChunk();
-    });
   }
 
   _speakNativeChunk() {
