@@ -1,0 +1,1548 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tamil AI Government Scheme Navigator</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+:root {
+    --navy: #102b46;
+    --blue: #176b87;
+    --orange: #ed8b23;
+    --light: #f3f7fb;
+    --white: #ffffff;
+    --green: #16834a;
+    --border: #dce5ed;
+    --text: #263746;
+}
+
+body {
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+header {
+    background: var(--navy);
+    color: white;
+    padding: 25px 6%;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+header h1 {
+    font-size: 27px;
+}
+
+header p {
+    color: #d6e7f4;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.badge {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 9px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+nav {
+    background: white;
+    padding: 14px 6%;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--navy);
+    padding: 9px 15px;
+    border-radius: 7px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+nav a:hover {
+    background: #e7f2f8;
+}
+
+.hero {
+    background: linear-gradient(120deg, #164c70, #21849a);
+    color: white;
+    padding: 45px 7%;
+}
+
+.hero-content {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.hero h2 {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    max-width: 700px;
+    color: #edf7fb;
+    margin-bottom: 22px;
+}
+
+.hero button {
+    background: var(--orange);
+    color: white;
+}
+
+.container {
+    max-width: 1200px;
+    width: 92%;
+    margin: 30px auto;
+}
+
+.section-heading {
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    color: var(--navy);
+    font-size: 25px;
+}
+
+.section-heading p {
+    color: #637485;
+    margin-top: 5px;
+}
+
+.panel {
+    background: white;
+    padding: 27px;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(16,43,70,0.06);
+    margin-bottom: 28px;
+    border: 1px solid #e8eef4;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 7px;
+    color: var(--navy);
+    font-size: 14px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd7e2;
+    border-radius: 7px;
+    background: white;
+    font-size: 15px;
+    color: var(--text);
+}
+
+input:focus, select:focus {
+    outline: 2px solid #9acfe0;
+    border-color: var(--blue);
+}
+
+.button-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+button, .link-button {
+    border: none;
+    background: var(--blue);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:hover, .link-button:hover {
+    opacity: 0.9;
+}
+
+.primary-button {
+    background: var(--orange);
+}
+
+.secondary-button {
+    background: #e9f1f6;
+    color: var(--navy);
+}
+
+.results-heading {
+    background: var(--navy);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.results-heading p {
+    color: #d6e7f4;
+    margin-top: 5px;
+}
+
+.scheme-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.scheme-card {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--blue);
+    box-shadow: 0 3px 12px rgba(16,43,70,0.04);
+    display: flex;
+    flex-direction: column;
+}
+
+.scheme-card h3 {
+    color: var(--navy);
+    margin-bottom: 8px;
+}
+
+.scheme-category {
+    display: inline-block;
+    background: #e7f3f8;
+    color: #145873;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    align-self: flex-start;
+}
+
+.scheme-card p {
+    margin: 6px 0;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.scheme-card .card-actions {
+    margin-top: auto;
+    padding-top: 15px;
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+.match-label {
+    color: var(--green);
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.notice {
+    background: #fff5dc;
+    border-left: 5px solid #e7a126;
+    padding: 15px;
+    border-radius: 7px;
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+.empty-state {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.explorer-controls {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+}
+
+.stat-card strong {
+    display: block;
+    color: var(--blue);
+    font-size: 25px;
+}
+
+.stat-card span {
+    color: #627386;
+    font-size: 13px;
+}
+
+#chatSection {
+    scroll-margin-top: 20px;
+}
+
+.chat-box {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.chat-header {
+    background: var(--navy);
+    color: white;
+    padding: 17px 20px;
+}
+
+.chat-header p {
+    font-size: 13px;
+    color: #d6e7f4;
+}
+
+#messages {
+    height: 320px;
+    overflow-y: auto;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.user-message, .bot-message {
+    max-width: 85%;
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.user-message {
+    align-self: flex-end;
+    background: #dff1fa;
+    color: var(--navy);
+}
+
+.bot-message {
+    align-self: flex-start;
+    background: #f0f3f6;
+    color: #243747;
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    border-top: 1px solid var(--border);
+}
+
+.chat-input-area input {
+    flex: 1;
+    min-width: 0;
+}
+
+.quick-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 15px 15px;
+}
+
+.quick-questions button {
+    background: #e7f1f7;
+    color: var(--navy);
+    padding: 8px 11px;
+    font-size: 12px;
+}
+
+footer {
+    margin-top: 40px;
+    background: var(--navy);
+    color: white;
+    padding: 25px;
+    text-align: center;
+    font-size: 13px;
+}
+
+footer p {
+    color: #d6e7f4;
+    margin-top: 6px;
+}
+
+.hidden {
+    display: none;
+}
+
+@media(max-width: 850px) {
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .scheme-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h2 {
+        font-size: 27px;
+    }
+}
+
+@media(max-width: 550px) {
+    header h1 {
+        font-size: 22px;
+    }
+
+    .form-grid, .stats-grid, .explorer-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .panel {
+        padding: 18px;
+    }
+
+    .chat-input-area {
+        flex-wrap: wrap;
+    }
+
+    .chat-input-area input {
+        flex-basis: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-content">
+        <div>
+            <h1>Tamil AI Government Scheme Navigator</h1>
+            <p>Discover government welfare schemes in one place</p>
+        </div>
+        <span class="badge">Eligibility • Scheme Search • Assistance</span>
+    </div>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#eligibility">Eligibility Matcher</a>
+    <a href="#explorer">Explore Schemes</a>
+    <a href="#chatSection">Scheme Assistant</a>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h2>Find Government Schemes That May Suit You</h2>
+        <p>
+            Explore educational assistance, farmer support, women welfare,
+            employment opportunities, pensions and other government scheme
+            categories through a simple interface.
+        </p>
+        <button class="primary-button"
+                onclick="document.getElementById('eligibility').scrollIntoView({behavior:'smooth'})">
+            Check My Eligibility
+        </button>
+    </div>
+</section>
+
+<main class="container">
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <strong id="schemeCount">0</strong>
+            <span>Scheme records in this demonstration</span>
+        </div>
+        <div class="stat-card">
+            <strong>10+</strong>
+            <span>Welfare categories to explore</span>
+        </div>
+        <div class="stat-card">
+            <strong>24/7</strong>
+            <span>Frontend access on your device</span>
+        </div>
+    </div>
+
+    <!-- ELIGIBILITY MATCHER -->
+
+    <section id="eligibility">
+        <div class="section-heading">
+            <h2>Scheme Eligibility Matcher</h2>
+            <p>Enter your details to find potentially relevant scheme records.</p>
+        </div>
+
+        <div class="panel">
+
+            <form id="eligibilityForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="age">Age *</label>
+                        <input type="number" id="age" min="1" max="120"
+                               placeholder="Enter your age" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender">Gender *</label>
+                        <select id="gender" required>
+                            <option value="">Select gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="state">State *</label>
+                        <select id="state" required>
+                            <option value="">Select state</option>
+                            <option value="Tamil Nadu">Tamil Nadu</option>
+                            <option value="Other">Other state</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="district">District (optional)</label>
+                        <input type="text" id="district"
+                               placeholder="Enter your district">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Community Category *</label>
+                        <select id="category" required>
+                            <option value="">Select category</option>
+                            <option value="General">General</option>
+                            <option value="OBC">OBC</option>
+                            <option value="SC">SC</option>
+                            <option value="ST">ST</option>
+                            <option value="Other">Other / Not listed</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="occupation">Occupation *</label>
+                        <select id="occupation" required>
+                            <option value="">Select occupation</option>
+                            <option value="Student">Student</option>
+                            <option value="Farmer">Farmer</option>
+                            <option value="Entrepreneur">Entrepreneur</option>
+                            <option value="Employee">Employee</option>
+                            <option value="Unemployed">Unemployed</option>
+                            <option value="Homemaker">Homemaker</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="income">Annual Family Income (₹) *</label>
+                        <input type="number" id="income" min="0"
+                               placeholder="Example: 200000" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="education">Education *</label>
+                        <select id="education" required>
+                            <option value="">Select education</option>
+                            <option value="School">School</option>
+                            <option value="UG">Undergraduate</option>
+                            <option value="PG">Postgraduate</option>
+                            <option value="Diploma">Diploma</option>
+                            <option value="No formal education">No formal education</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="farmer">Are you a farmer? *</label>
+                        <select id="farmer" required>
+                            <option value="">Select answer</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="disability">Person with a disability?</label>
+                        <select id="disability">
+                            <option value="No">No / Not specified</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="primary-button">
+                        Find Matching Schemes
+                    </button>
+                    <button type="reset" class="secondary-button">
+                        Clear Form
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+        <div id="result" aria-live="polite"></div>
+    </section>
+
+    <!-- SCHEME EXPLORER -->
+
+    <section id="explorer">
+        <div class="section-heading">
+            <h2>Explore Government Schemes</h2>
+            <p>Search the demonstration scheme records by name or category.</p>
+        </div>
+
+        <div class="panel">
+
+            <div class="explorer-controls">
+                <div class="form-group">
+                    <label for="searchScheme">Search schemes</label>
+                    <input type="search" id="searchScheme"
+                           placeholder="Example: student, farmer, pension">
+                </div>
+
+                <div class="form-group">
+                    <label for="filterCategory">Filter by category</label>
+                    <select id="filterCategory">
+                        <option value="All">All categories</option>
+                        <option value="Education">Education</option>
+                        <option value="Agriculture">Agriculture</option>
+                        <option value="Women Welfare">Women Welfare</option>
+                        <option value="Employment">Employment</option>
+                        <option value="Pension">Pension</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Housing">Housing</option>
+                        <option value="Business">Business</option>
+                        <option value="Food Security">Food Security</option>
+                        <option value="Disability Welfare">Disability Welfare</option>
+                        <option value="Child Welfare">Child Welfare</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="explorerResults" class="scheme-grid"></div>
+        </div>
+    </section>
+
+    <!-- CHATBOT -->
+
+    <section id="chatSection">
+        <div class="section-heading">
+            <h2>Government Scheme Assistant</h2>
+            <p>Ask questions about scheme categories, eligibility and documents.</p>
+        </div>
+
+        <div class="chat-box">
+
+            <div class="chat-header">
+                <h3>Scheme Assistant</h3>
+                <p>Rule-based demonstration chatbot</p>
+            </div>
+
+            <div id="messages" aria-live="polite">
+                <div class="bot-message">
+                    Vanakkam! Welcome to the Tamil AI Government Scheme Navigator.
+
+                    Ask me about education, women welfare, farming, employment,
+                    pensions, healthcare, housing, business or other welfare categories.
+                </div>
+            </div>
+
+            <div class="quick-questions">
+                <button type="button" onclick="askQuestion('What schemes are available for students?')">
+                    Student schemes
+                </button>
+                <button type="button" onclick="askQuestion('What schemes are available for farmers?')">
+                    Farmer schemes
+                </button>
+                <button type="button" onclick="askQuestion('What documents are required?')">
+                    Required documents
+                </button>
+                <button type="button" onclick="askQuestion('How can I apply?')">
+                    How to apply
+                </button>
+            </div>
+
+            <form class="chat-input-area" id="chatForm">
+                <input type="text" id="chatInput"
+                       placeholder="Ask about government schemes..."
+                       autocomplete="off" required>
+                <button type="submit" class="primary-button">Send</button>
+            </form>
+
+        </div>
+    </section>
+
+    <div class="notice">
+        <strong>Important information:</strong>
+        This is a frontend demonstration using illustrative scheme records and
+        simplified eligibility rules. A match does not establish official eligibility.
+        Verify current scheme status, benefits, documents and application procedures
+        with the relevant government department before applying.
+        No personal profile information is saved or transmitted by this standalone page.
+    </div>
+
+</main>
+
+<footer>
+    <h3>Tamil AI Government Scheme Navigator</h3>
+    <p>Helping people discover relevant government welfare information.</p>
+    <p>Demonstration project — verify scheme details with official sources.</p>
+</footer>
+
+<script>
+
+/*
+ * DEMONSTRATION DATA
+ * These records illustrate how the application works.
+ * They are not an exhaustive or officially verified scheme database.
+ */
+
+const schemes = [
+
+    {
+        id: 1,
+        name: "National Scholarship Portal Schemes",
+        category: "Education",
+        description: "A portal for discovering various central and other participating scholarship opportunities.",
+        benefit: "Scholarship assistance, depending on the individual scheme.",
+        documents: "Commonly requested documents may include educational records, income certificate and bank details.",
+        occupations: ["Student"],
+        minAge: 5,
+        maxAge: 35,
+        maxIncome: null,
+        genders: [],
+        categories: [],
+        states: ["Tamil Nadu", "Other"],
+        education: [],
+        farmerRequired: false,
+        disabilityRequired: false,
+        officialUrl: "https://scholarships.gov.in/"
+    },
+
+    {
+        id: 2,
+        name: "PM-KISAN",
+        category: "Agriculture",
+        description: "A central government income-support programme for eligible landholding farmer families, subject to scheme rules.",
+        benefit: "Financial assistance under the current programme rules.",
+        documents: "Land records, identity details and bank information may be required through official channels.",
+        occupations: ["Farmer"],
+        minAge: 18,
+        maxAge: null,
+        maxIncome: null,
+        genders: [],
+        categories: [],
+        states: ["Tamil Nadu", "Other"],
+        education: [],
+        farmerRequired: true,
+        disabilityRequired: false,
+        officialUrl: "https://pmkisan.gov.in/"
+    },
+
+    {
+        id: 3,
+        name: "Pudhumai Penn Scheme",
+        category: "Education",
+        description: "Tamil Nadu's educational assistance scheme for eligible girl students meeting the applicable schooling and higher-education conditions.",
+        benefit: "Monthly educational assistance under the scheme's current rules.",
+        documents: "Educational records, identity documents and other records specified by the institution or department.",
+        occupations: ["Student"],
+        minAge: 16,
+        maxAge: 30,
+        maxIncome: null,
+        genders: ["Female"],
+        categories: [],
+        states: ["Tamil Nadu"],
+        education: ["UG", "Diploma"],
+        farmerRequired: false,
+        disabilityRequired: false,
+        officialUrl: "https://www.tn.gov.in/"
+    },
+
+    {
+        id: 4,
+        name: "Tamil Pudhalvan Scheme",
+        category: "Education",
+        description: "Tamil Nadu educational assistance for eligible male students under the scheme's current schooling and higher-education conditions.",
+        benefit: "Monthly educational assistance under the applicable scheme rules.",
+        documents: "Educational records, identity documents and other documents specified by the department.",
+        occupations: ["Student"],
+        minAge: 16,
+        maxAge: 30,
+        maxIncome: null,
+        genders: ["Male"],
+        categories: [],
+        states: ["Tamil Nadu"],
+        education: ["UG", "Diploma"],
+        farmerRequired: false,
+        disabilityRequired: false,
+        officialUrl: "https://www.tn.gov.in/"
+    },
+
+    {
+        id: 5,
+        name: "PM Fasal Bima Yojana",
+        category: "Agriculture",
+        description: "A crop insurance programme for eligible farmers and notified crops, subject to current operational rules.",
+        benefit: "Insurance protection for covered crop losses, subject to policy conditions.",
+        documents: "Cultivation and land-related records and other documents required under the applicable process.",
+        occupations: ["Farmer"],
+        minAge: 18,
+        maxAge: null,
+        maxIncome: null,
+        genders: [],
+        categories: [],
+        states: ["Tamil Nadu", "Other"],
+        education: [],
+        farmerRequired: true,
+        disabilityRequired: false,
+        officialUrl: "https://pmfby.gov.in/"
+    },
+
+    {
+        id: 6,
+        name: "Skill India Training Opportunities",
+        category: "Employment",
+        description: "Explore skill development and vocational training opportunities offered under participating programmes.",
+        benefit: "Training or certification opportunities, depending on the programme.",
+        documents: "Identity proof, educational records and other documents specified by the training provider.",
+        occupations: ["Unemployed", "Student", "Employee", "Other"],
+        minAge: 18,
+        maxAge: 35,
+        maxIncome: null,
+        genders: [],
+        categories: [],
+        states: ["Tamil Nadu", "Other"],
+        education: [],
+        farmerRequired: false,
+        disabilityRequired: false,
+        officialUrl: "https://www.skillindia.gov.in/"
+    },
+
+    {
+        id: 7,
+        name: "Indira Gandhi National Old Age Pension Scheme",
+        category: "Pension",
+        description: "A social assistance pension programme for eligible older people under applicable central and state rules.",
+        benefit: "Pension assistance according to current eligibility and benefit rules.",
+        documents: "Age proof, residence records, income or household eligibility records and other required documents.",
+        occupations: [],
+        minAge: 60,
+        maxAge: null,
+        maxIncome: null,
+        genders: [],
+        categories: [],
+        states: ["Tamil Nadu", "Other"],
+        education: [],
+        farmerRequired: false,
+        disabilityRequired: false,
+        officialUrl: "https://nsap.nic.in/"
+    },
+
+    {
+        id: 8,
+        name: "Ayushman Bharat PM-JAY",
+        category: "Healthcare",
+        description: "A health coverage programme for eligible beneficiaries under the applicable programme and state arrangements.",
+        benefit: "Covered hospital treatment according to eligibility and package rules.",
+        documents: "Beneficiary identification and other documents requested through authorised channels.",
+        occupations: [],
+        minAge: 0,
+        maxAge: null,
+        maxIncome: null,
+        genders: [],
+        categories: [],
+        states: ["Tamil Nadu", "Other"],
+        education: [],
+        farmerRequired: false,
+        disabilityRequired: false,
+        officialUrl: "https://pmjay.gov.in/"
+    },
+
+    {
+        id: 9,
+        name: "Pradhan Mantri Awas Yojana",
+        category: "Housing",
+        description: "Housing assistance through the applicable urban or rural programme and its eligibility rules.",
+        benefit: "Housing assistance according to the relevant programme.",
+        documents: "Residence and household records, income details and other scheme-specific documents.",
+        occupations: [],
+        minAge: 18,
+        maxAge: null,
+        maxIncome: null,
+        genders: [],
+        categories: [],
+        states: ["Tamil Nadu", "Other"],
+        education: [],
+        farmerRequired: false,
+        disabilityRequired: false,
+        officialUrl: "https://pmaymis.gov.in/"
+    },
+
+    {
+        id: 10,
+        name: "Pradhan Mantri MUDRA Yojana",
+        category: "Business",
+        description: "Business credit through participating lenders for eligible non-corporate micro-enterprise activities.",
+        benefit: "Business loans subject to lender assessment and scheme conditions.",
+        documents: "Identity, address, business and financial documents required by the lender.",
+        occupations: ["Entrepreneur"],
+        minAge: 18,
+        maxAge: null,
+        maxIncome: null,
+        genders: [],
+        categories: [],
+        states: ["Tamil Nadu", "Other"],
+        education: [],
+        farmerRequired: false,
+        disabilityRequired: false,
+        officialUrl: "https://www.mudra.org.in/"
+    },
+
+    {
+        id: 11,
+        name: "Public Distribution System",
+        category: "Food Security",
+        description: "Food distribution benefits for eligible ration cardholders under applicable rules.",
+        benefit: "Eligible food-grain and other notified benefits.",
+        documents: "Ration card and other records required by the relevant state authority.",
+        occupations: [],
+        minAge: 18,
+        maxAge: null,
+        maxIncome: null,
+        genders: [],
+        categories: [],
+        states: ["Tamil Nadu"],
+        education: [],
+        farmerRequired: false,
+        disabilityRequired: false,
+        officialUrl: "https://www.tn.gov.in/"
+    },
+
+    {
+        id: 12,
+        name: "Disability Welfare Assistance",
+        category: "Disability Welfare",
+        description: "Explore government disability assistance, education, employment and assistive-device programmes.",
+        benefit: "Benefits depend on the particular programme and eligibility conditions.",
+        documents: "Disability certificate and other documents specified by the responsible department.",
+        occupations: [],
+        minAge: 0,
+        maxAge: null,
+        maxIncome: null,
+        genders: [],
+        categories: [],
+        states: ["Tamil Nadu", "Other"],
+        education: [],
+        farmerRequired: false,
+        disabilityRequired: true,
+        officialUrl: "https://www.tn.gov.in/"
+    },
+
+    {
+        id: 13,
+        name: "Pradhan Mantri Matru Vandana Yojana",
+        category: "Child Welfare",
+        description: "A maternity benefit programme for eligible beneficiaries under its current conditions.",
+        benefit: "Financial assistance subject to programme eligibility and applicable rules.",
+        documents: "Pregnancy and identity records and other documents specified by the responsible authority.",
+        occupations: [],
+        minAge: 18,
+        maxAge: null,
+        maxIncome: null,
+        genders: ["Female"],
+        categories: [],
+        states: ["Tamil Nadu", "Other"],
+        education: [],
+        farmerRequired: false,
+        disabilityRequired: false,
+        officialUrl: "https://wcd.gov.in/"
+    },
+
+    {
+        id: 14,
+        name: "Women Entrepreneurship Assistance",
+        category: "Women Welfare",
+        description: "Explore business development and financial assistance programmes for eligible women entrepreneurs.",
+        benefit: "Support depends on the particular state, central or lender programme.",
+        documents: "Identity, business, residence and financial documents required by the selected programme.",
+        occupations: ["Entrepreneur"],
+        minAge: 18,
+        maxAge: null,
+        maxIncome: null,
+        genders: ["Female"],
+        categories: [],
+        states: ["Tamil Nadu", "Other"],
+        education: [],
+        farmerRequired: false,
+        disabilityRequired: false,
+        officialUrl: "https://www.tn.gov.in/"
+    },
+
+    {
+        id: 15,
+        name: "Community-Based Educational Assistance",
+        category: "Education",
+        description: "Explore scholarships and educational assistance for eligible students under relevant community welfare programmes.",
+        benefit: "Scholarship or educational assistance depending on the selected scheme.",
+        documents: "Educational records, income certificate and community certificate where required.",
+        occupations: ["Student"],
+        minAge: 5,
+        maxAge: 35,
+        maxIncome: null,
+        genders: [],
+        categories: ["SC", "ST", "OBC"],
+        states: ["Tamil Nadu", "Other"],
+        education: [],
+        farmerRequired: false,
+        disabilityRequired: false,
+        officialUrl: "https://scholarships.gov.in/"
+    },
+
+    {
+        id: 16,
+        name: "Tamil Nadu Women Welfare Programmes",
+        category: "Women Welfare",
+        description: "Explore state women welfare programmes and verify their current eligibility conditions.",
+        benefit: "Benefits vary by programme.",
+        documents: "Identity, residence, income and other scheme-specific documents.",
+        occupations: [],
+        minAge: 18,
+        maxAge: null,
+        maxIncome: null,
+        genders: ["Female"],
+        categories: [],
+        states: ["Tamil Nadu"],
+        education: [],
+        farmerRequired: false,
+        disabilityRequired: false,
+        officialUrl: "https://www.tn.gov.in/"
+    }
+
+];
+
+
+/* DISPLAY SCHEME CARDS */
+
+function schemeCard(scheme, matched = false) {
+
+    return `
+        <article class="scheme-card">
+
+            <span class="scheme-category">
+                ${escapeHTML(scheme.category)}
+            </span>
+
+            <h3>${escapeHTML(scheme.name)}</h3>
+
+            <p>
+                <strong>Description:</strong>
+                ${escapeHTML(scheme.description)}
+            </p>
+
+            <p>
+                <strong>Potential benefit:</strong>
+                ${escapeHTML(scheme.benefit)}
+            </p>
+
+            <p>
+                <strong>Documents to verify:</strong>
+                ${escapeHTML(scheme.documents)}
+            </p>
+
+            ${matched ? `
+                <p class="match-label">
+                    ✓ Matches the simplified demonstration rules.
+                </p>
+            ` : ""}
+
+            <div class="card-actions">
+
+                <button type="button"
+                        onclick="showDetails(${scheme.id})">
+                    View Details
+                </button>
+
+                <a class="link-button"
+                   href="${scheme.officialUrl}"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Official Website
+                </a>
+
+            </div>
+
+        </article>
+    `;
+}
+
+
+/* SAFELY DISPLAY USER-RELATED TEXT */
+
+function escapeHTML(value) {
+
+    return String(value).replace(/[&<>"']/g, function(character) {
+
+        const entities = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        };
+
+        return entities[character];
+
+    });
+
+}
+
+
+/* FIND POTENTIALLY MATCHING SCHEMES */
+
+document.getElementById("eligibilityForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const age = Number(document.getElementById("age").value);
+    const gender = document.getElementById("gender").value;
+    const state = document.getElementById("state").value;
+    const category = document.getElementById("category").value;
+    const occupation = document.getElementById("occupation").value;
+    const incomeInput = document.getElementById("income").value.trim();
+    const income = Number(incomeInput);
+    const education = document.getElementById("education").value;
+    const farmer = document.getElementById("farmer").value;
+    const disability = document.getElementById("disability").value;
+
+    const result = document.getElementById("result");
+
+    if (
+        !Number.isFinite(age) ||
+        age < 1 ||
+        age > 120 ||
+        !gender ||
+        !state ||
+        !category ||
+        !occupation ||
+        incomeInput === "" ||
+        !Number.isFinite(income) ||
+        income < 0 ||
+        !education ||
+        !farmer
+    ) {
+
+        result.innerHTML = `
+            <div class="empty-state">
+                <h3>Please check your details.</h3>
+                <p>Enter a valid age and income and complete all required fields.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    const profile = {
+        age,
+        gender,
+        state,
+        category,
+        occupation,
+        income,
+        education,
+        farmer,
+        disability
+    };
+
+    const matchedSchemes = schemes.filter(function(scheme) {
+
+        if (scheme.minAge != null && age < scheme.minAge) {
+            return false;
+        }
+
+        if (scheme.maxAge != null && age > scheme.maxAge) {
+            return false;
+        }
+
+        if (
+            scheme.maxIncome != null &&
+            income > scheme.maxIncome
+        ) {
+            return false;
+        }
+
+        if (
+            scheme.genders.length > 0 &&
+            !scheme.genders.includes(gender)
+        ) {
+            return false;
+        }
+
+        if (
+            scheme.occupations.length > 0 &&
+            !scheme.occupations.includes(occupation)
+        ) {
+            return false;
+        }
+
+        if (
+            scheme.categories.length > 0 &&
+            !scheme.categories.includes(category)
+        ) {
+            return false;
+        }
+
+        if (!scheme.states.includes(state)) {
+            return false;
+        }
+
+        if (
+            scheme.education.length > 0 &&
+            !scheme.education.includes(education)
+        ) {
+            return false;
+        }
+
+        if (scheme.farmerRequired && farmer !== "Yes") {
+            return false;
+        }
+
+        if (scheme.disabilityRequired && disability !== "Yes") {
+            return false;
+        }
+
+        return true;
+
+    });
+
+    if (matchedSchemes.length === 0) {
+
+        result.innerHTML = `
+            <div class="empty-state">
+                <h3>No records matched these demonstration rules.</h3>
+                <p>
+                    This does not mean that you are ineligible for all government
+                    schemes. Explore the scheme catalogue or consult the relevant
+                    government department.
+                </p>
+                <div class="button-row" style="justify-content:center">
+                    <button type="button"
+                            onclick="document.getElementById('explorer').scrollIntoView({behavior:'smooth'})">
+                        Explore All Scheme Records
+                    </button>
+                </div>
+            </div>
+        `;
+
+        return;
+    }
+
+    result.innerHTML = `
+        <div class="results-heading">
+            <h2>Potentially Matching Schemes</h2>
+            <p>
+                ${matchedSchemes.length} demonstration record(s) matched your details.
+            </p>
+        </div>
+
+        <div class="scheme-grid">
+            ${matchedSchemes.map(scheme => schemeCard(scheme, true)).join("")}
+        </div>
+
+        <div class="notice">
+            <strong>Eligibility notice:</strong>
+            These results are based on simplified demonstration rules.
+            They do not verify official eligibility, application availability
+            or entitlement. Review each scheme's current rules before applying.
+        </div>
+    `;
+
+    result.scrollIntoView({behavior: "smooth", block: "start"});
+
+});
+
+
+/* SHOW MORE DETAILS */
+
+function showDetails(id) {
+
+    const scheme = schemes.find(item => item.id === id);
+
+    if (!scheme) {
+        return;
+    }
+
+    alert(
+        "SCHEME DETAILS\n\n" +
+        scheme.name + "\n\n" +
+        "Category: " + scheme.category + "\n\n" +
+        "Description: " + scheme.description + "\n\n" +
+        "Potential benefit: " + scheme.benefit + "\n\n" +
+        "Documents to verify: " + scheme.documents + "\n\n" +
+        "Please open the official website to confirm the current eligibility rules."
+    );
+
+}
+
+
+/* SEARCH AND FILTER SCHEMES */
+
+function renderExplorer() {
+
+    const search = document.getElementById("searchScheme")
+        .value.trim().toLowerCase();
+
+    const category = document.getElementById("filterCategory").value;
+
+    const filtered = schemes.filter(function(scheme) {
+
+        const matchesSearch =
+            scheme.name.toLowerCase().includes(search) ||
+            scheme.category.toLowerCase().includes(search) ||
+            scheme.description.toLowerCase().includes(search);
+
+        const matchesCategory =
+            category === "All" || scheme.category === category;
+
+        return matchesSearch && matchesCategory;
+
+    });
+
+    const container = document.getElementById("explorerResults");
+
+    if (filtered.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty-state">
+                <h3>No matching records found.</h3>
+                <p>Try another search word or category.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML = filtered.map(scheme => schemeCard(scheme)).join("");
+
+}
+
+document.getElementById("searchScheme").addEventListener("input", renderExplorer);
+
+document.getElementById("filterCategory").addEventListener("change", renderExplorer);
+
+
+/* CHATBOT */
+
+function askQuestion(question) {
+
+    document.getElementById("chatInput").value = question;
+
+    document.getElementById("chatForm").requestSubmit();
+
+}
+
+
+document.getElementById("chatForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const input = document.getElementById("chatInput");
+    const message = input.value.trim();
+
+    if (!message) {
+        return;
+    }
+
+    addMessage(message, "user-message");
+
+    const reply = getBotReply(message);
+
+    addMessage(reply, "bot-message");
+
+    input.value = "";
+
+});
+
+
+function addMessage(message, className) {
+
+    const messages = document.getElementById("messages");
+
+    const div = document.createElement("div");
+
+    div.className = className;
+
+    div.textContent = message;
+
+    messages.appendChild(div);
+
+    messages.scrollTop = messages.scrollHeight;
+
+}
+
+
+/* KEYWORD-BASED CHATBOT RESPONSE */
+
+function getBotReply(message) {
+
+    const question = message.toLowerCase();
+
+    const categories = {
+
+        "Education": ["student", "education", "scholarship", "college", "school", "study"],
+        "Agriculture": ["farmer", "agriculture", "farming", "crop", "kisan"],
+        "Women Welfare": ["women", "woman", "girl", "widow", "female"],
+        "Employment": ["job", "employment", "unemployed", "skill", "training"],
+        "Pension": ["pension", "old age", "senior citizen", "elderly"],
+        "Healthcare": ["health", "medical", "hospital", "insurance", "treatment"],
+        "Housing": ["housing", "house", "home"],
+        "Business": ["business", "entrepreneur", "startup", "loan"],
+        "Food Security": ["ration", "food security", "food grains"],
+        "Disability Welfare": ["disability", "disabled", "assistive device"],
+        "Child Welfare": ["maternity", "pregnancy", "pregnant", "mother", "child"]
+    };
+
+    if (
+        question.includes("document") ||
+        question.includes("certificate") ||
+        question.includes("papers")
+    ) {
+
+        return "Commonly requested documents may include identity proof, residence proof, income certificate, bank details, educational records and category certificates where applicable. Requirements differ by scheme. Tell me the scheme name to narrow down the list. Never share Aadhaar numbers, OTPs or bank PINs in this chat.";
+
+    }
+
+    if (
+        question.includes("apply") ||
+        question.includes("application") ||
+        question.includes("register")
+    ) {
+
+        return "To apply, first identify the scheme, read the current official eligibility rules, prepare the required documents and follow the official application process. Save your acknowledgement number if one is provided. Tell me the scheme name and I can help you locate the relevant official information.";
+
+    }
+
+    if (
+        question.includes("eligible") ||
+        question.includes("eligibility") ||
+        question.includes("qualify")
+    ) {
+
+        return "Use the Eligibility Matcher above to compare your details with our demonstration records. The results are only preliminary because the full official eligibility rules are not implemented. Final eligibility must be confirmed with the responsible government department.";
+
+    }
+
+    if (
+        question.includes("all schemes") ||
+        question.includes("list of schemes") ||
+        question.includes("available schemes")
+    ) {
+
+        return "Our demonstration catalogue covers Education, Agriculture, Women Welfare, Employment, Pension, Healthcare, Housing, Business, Food Security, Disability Welfare and Child Welfare. Use Explore Government Schemes to search the available records. This is not a complete list of all government schemes.";
+
+    }
+
+    for (const category in categories) {
+
+        const keywords = categories[category];
+
+        if (keywords.some(keyword => question.includes(keyword))) {
+
+            const matches = schemes.filter(
+                scheme => scheme.category === category
+            );
+
+            if (matches.length === 0) {
+
+                return "I can help you explore " + category +
+                    " schemes, but there are no matching records in the current demonstration catalogue. Please consult the relevant official government portal.";
+
+            }
+
+            return category + " schemes to explore:\n\n" +
+                matches.map(scheme => "• " + scheme.name).join("\n") +
+                "\n\nThese are catalogue records, not confirmed eligibility results. Open the scheme's official website to verify current requirements.";
+        }
+
+    }
+
+    if (
+        question.includes("hello") ||
+        question.includes("hi") ||
+        question.includes("vanakkam")
+    ) {
+
+        return "Vanakkam! Welcome to the Tamil AI Government Scheme Navigator. Ask me about education, farming, women welfare, jobs, pensions, healthcare, housing, business or required documents.";
+
+    }
+
+    return "I can help you explore government scheme categories, eligibility guidance, documents and application procedures. Try asking: What schemes are available for students? What documents are required? How can I apply? This demonstration chatbot uses keyword matching and does not yet have a live AI connection.";
+}
+
+
+/* INITIALISE PAGE */
+
+document.getElementById("schemeCount").textContent = schemes.length;
+
+renderExplorer();
+
+</script>
+
+</body>
+</html>
+```
