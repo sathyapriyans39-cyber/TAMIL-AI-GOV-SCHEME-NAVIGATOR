@@ -1,626 +1,863 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tamil AI Government Scheme Navigator</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+    <title>Tamil AI | Government Scheme Navigator</title>
 
-        body {
-            background: #f4f7fb;
-            color: #222;
-        }
+    <link rel="stylesheet" href="style.css">
 
-        header {
-            background: #123b5d;
-            color: white;
-            padding: 18px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    <!-- Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-        header h1 {
-            font-size: 22px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 15px;
-        }
-
-        nav a:hover {
-            color: #f39c12;
-        }
-
-        .hero {
-            background: linear-gradient(135deg, #123b5d, #2878a8);
-            color: white;
-            text-align: center;
-            padding: 70px 20px;
-        }
-
-        .hero h2 {
-            font-size: 38px;
-            margin-bottom: 15px;
-        }
-
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 25px;
-        }
-
-        .search-box {
-            max-width: 600px;
-            margin: auto;
-            display: flex;
-        }
-
-        .search-box input {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 5px 0 0 5px;
-            font-size: 16px;
-        }
-
-        .search-box button {
-            padding: 15px 25px;
-            border: none;
-            background: #f39c12;
-            color: white;
-            cursor: pointer;
-            border-radius: 0 5px 5px 0;
-            font-size: 16px;
-        }
-
-        section {
-            padding: 45px 8%;
-        }
-
-        section h2 {
-            text-align: center;
-            color: #123b5d;
-            margin-bottom: 30px;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .card h3 {
-            color: #123b5d;
-            margin-bottom: 12px;
-        }
-
-        .card p {
-            color: #555;
-            line-height: 1.5;
-        }
-
-        .card button {
-            margin-top: 18px;
-            padding: 10px 18px;
-            border: none;
-            background: #2878a8;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .chat-section {
-            background: #eaf2f8;
-        }
-
-        .chat-box {
-            max-width: 700px;
-            margin: auto;
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-        }
-
-        .messages {
-            height: 180px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-
-        .user-message {
-            text-align: right;
-            margin: 10px;
-            color: #123b5d;
-        }
-
-        .bot-message {
-            text-align: left;
-            margin: 10px;
-            color: #2878a8;
-        }
-
-        .chat-input {
-            display: flex;
-        }
-
-        .chat-input input {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ccc;
-        }
-
-        .chat-input button {
-            padding: 12px 20px;
-            border: none;
-            background: #123b5d;
-            color: white;
-            cursor: pointer;
-        }
-
-        .eligibility {
-            max-width: 700px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-        }
-
-        .eligibility input,
-        .eligibility select {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .eligibility button {
-            width: 100%;
-            padding: 13px;
-            background: #f39c12;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #result {
-            margin-top: 20px;
-            padding: 15px;
-            background: #eef7ee;
-            display: none;
-        }
-
-        footer {
-            background: #123b5d;
-            color: white;
-            text-align: center;
-            padding: 25px;
-        }
-
-        @media(max-width: 700px) {
-            header {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            nav a {
-                margin: 5px;
-            }
-
-            .hero h2 {
-                font-size: 28px;
-            }
-
-            .search-box {
-                flex-direction: column;
-            }
-
-            .search-box input,
-            .search-box button {
-                border-radius: 5px;
-                margin: 3px 0;
-            }
-        }
-    </style>
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
 
-<header>
-    <h1>Tamil AI Scheme Navigator</h1>
+<div class="app">
 
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#schemes">Schemes</a>
-        <a href="#eligibility">Eligibility</a>
-        <a href="#assistant">AI Assistant</a>
-    </nav>
-</header>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
+        <div class="brand">
+            <div class="brand-icon">
+                <i class="fa-solid fa-landmark"></i>
+            </div>
 
-<section class="hero" id="home">
-
-    <h2>Tamil AI Government Scheme Navigator</h2>
-
-    <p>
-        Find Government Schemes Easily Using AI
-    </p>
-
-    <div class="search-box">
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="Search for a government scheme..."
-        >
-
-        <button onclick="searchScheme()">
-            Search
-        </button>
-    </div>
-
-    <p id="searchResult"></p>
-
-</section>
-
-
-<section id="schemes">
-
-    <h2>Popular Government Schemes</h2>
-
-    <div class="cards">
-
-        <div class="card">
-            <h3>Education Schemes</h3>
-
-            <p>
-                Find scholarships and educational
-                assistance schemes.
-            </p>
-
-            <button onclick="showMessage('Education schemes selected')">
-                Explore
-            </button>
+            <div>
+                <h2>Tamil<span>AI</span></h2>
+                <p>Scheme Navigator</p>
+            </div>
         </div>
 
+        <div class="menu-label">MAIN MENU</div>
 
-        <div class="card">
-            <h3>Women Welfare</h3>
+        <nav class="navigation">
 
-            <p>
-                Find government schemes designed
-                to support women.
-            </p>
-
-            <button onclick="showMessage('Women welfare schemes selected')">
-                Explore
+            <button class="nav-link active" data-view="overview">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
             </button>
-        </div>
 
-
-        <div class="card">
-            <h3>Farmer Schemes</h3>
-
-            <p>
-                Find agricultural subsidies and
-                farmer welfare schemes.
-            </p>
-
-            <button onclick="showMessage('Farmer schemes selected')">
-                Explore
+            <button class="nav-link" data-view="schemes">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Find Schemes</span>
             </button>
-        </div>
 
-
-        <div class="card">
-            <h3>Employment</h3>
-
-            <p>
-                Find employment, training and
-                skill-development schemes.
-            </p>
-
-            <button onclick="showMessage('Employment schemes selected')">
-                Explore
+            <button class="nav-link" data-view="assistant">
+                <i class="fa-solid fa-robot"></i>
+                <span>AI Assistant</span>
             </button>
-        </div>
 
-    </div>
+            <button class="nav-link" data-view="centres">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Service Centres</span>
+            </button>
 
-</section>
+        </nav>
 
+        <div class="sidebar-bottom">
 
-<section class="chat-section" id="assistant">
+            <div class="help-card">
+                <div class="help-icon">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
 
-    <h2>AI Government Scheme Assistant</h2>
+                <h3>Need assistance?</h3>
 
-    <div class="chat-box">
+                <p>Find government services in a simpler way.</p>
 
-        <div class="messages" id="messages">
+                <button id="helpButton">
+                    Talk to Assistant
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
 
-            <div class="bot-message">
-                Hello! I am your AI Government Scheme Assistant.
-                Ask me about government schemes.
+            <div class="sidebar-footer">
+                <i class="fa-solid fa-shield-halved"></i>
+                Citizen-first digital access
             </div>
 
         </div>
 
-        <div class="chat-input">
-
-            <input
-                type="text"
-                id="chatInput"
-                placeholder="Ask your question..."
-            >
-
-            <button onclick="sendMessage()">
-                Send
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
+    </aside>
 
 
-<section id="eligibility">
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
 
-    <h2>Scheme Eligibility Matcher</h2>
+        <!-- TOP BAR -->
+        <header class="topbar">
 
-    <div class="eligibility">
+            <div class="mobile-brand">
+                <i class="fa-solid fa-landmark"></i>
+                TamilAI
+            </div>
 
-        <label>Age</label>
+            <div class="breadcrumb">
+                <span>Workspace</span>
+                <i class="fa-solid fa-chevron-right"></i>
+                <strong id="pageTitle">Dashboard</strong>
+            </div>
 
-        <input
-            type="number"
-            id="age"
-            placeholder="Enter your age"
-        >
+            <div class="topbar-actions">
 
+                <div class="language-control">
+                    <i class="fa-solid fa-globe"></i>
 
-        <label>Occupation</label>
+                    <select id="language" aria-label="Select language">
+                        <option value="en">English</option>
+                        <option value="ta">தமிழ்</option>
+                    </select>
+                </div>
 
-        <select id="occupation">
+                <div class="user-avatar">DS</div>
 
-            <option value="">Select occupation</option>
+            </div>
 
-            <option>Student</option>
-            <option>Farmer</option>
-            <option>Employee</option>
-            <option>Business</option>
-            <option>Unemployed</option>
-
-        </select>
-
-
-        <label>Annual Income</label>
-
-        <input
-            type="number"
-            id="income"
-            placeholder="Enter annual income"
-        >
+        </header>
 
 
-        <button onclick="checkEligibility()">
-            Check Eligibility
-        </button>
+        <!-- OVERVIEW PAGE -->
+        <section class="view active" id="overview">
+
+            <div class="welcome-row">
+
+                <div>
+                    <p class="eyebrow">
+                        <span class="live-dot"></span>
+                        YOUR DIGITAL PUBLIC SERVICE COMPANION
+                    </p>
+
+                    <h1 id="welcomeTitle">
+                        Government benefits,<br>
+                        <span>made accessible to everyone.</span>
+                    </h1>
+
+                    <p class="welcome-description">
+                        Discover welfare schemes, understand eligibility,
+                        and find the support you deserve — all in one place.
+                    </p>
+
+                    <div class="welcome-buttons">
+
+                        <button class="primary-button" data-go="schemes">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            Find My Schemes
+                        </button>
+
+                        <button class="secondary-button" data-go="assistant">
+                            <i class="fa-solid fa-microphone"></i>
+                            Ask AI Assistant
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-visual">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1100&q=85"
+                        alt="Green agricultural fields in a rural landscape">
+
+                    <div class="hero-image-overlay"></div>
+
+                    <div class="hero-badge">
+                        <div class="badge-icon">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+
+                        <div>
+                            <strong>Support for every citizen</strong>
+                            <span>Discover opportunities for you</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-floating-icon">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+
+                </div>
+
+            </div>
 
 
-        <div id="result"></div>
+            <!-- QUICK STATS -->
+            <div class="stats-grid">
 
-    </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
 
-</section>
+                    <div>
+                        <p>Scheme Discovery</p>
+                        <h3>Easy</h3>
+                        <span>Find relevant opportunities</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fa-solid fa-user-check"></i>
+                    </div>
+
+                    <div>
+                        <p>Eligibility Guidance</p>
+                        <h3>Personalized</h3>
+                        <span>Based on your profile</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fa-solid fa-language"></i>
+                    </div>
+
+                    <div>
+                        <p>Language Support</p>
+                        <h3>தமிழ் + English</h3>
+                        <span>Designed for accessibility</span>
+                    </div>
+                </div>
+
+            </div>
 
 
-<section>
+            <!-- FEATURED SCHEMES -->
+            <div class="section-heading">
 
-    <h2>Other Services</h2>
+                <div>
+                    <p class="eyebrow">EXPLORE OPPORTUNITIES</p>
+                    <h2>Popular scheme categories</h2>
+                    <p>Start with the type of support you are looking for.</p>
+                </div>
 
-    <div class="cards">
+                <button class="text-button" data-go="schemes">
+                    Explore all
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
 
-        <div class="card">
+            </div>
 
-            <h3>e-Sevai Locator</h3>
 
-            <p>
-                Find nearby e-Sevai centres and
-                access government services.
+            <div class="category-grid">
+
+                <button class="category-card" data-category="Agriculture">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1499529112087-3cb3b73cec95?auto=format&fit=crop&w=700&q=80"
+                        alt="Agricultural field">
+
+                    <div class="category-shade"></div>
+
+                    <div class="category-content">
+                        <span class="category-icon">
+                            <i class="fa-solid fa-seedling"></i>
+                        </span>
+
+                        <h3>Agriculture</h3>
+                        <p>Support for farmers and rural livelihoods</p>
+                    </div>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square category-arrow"></i>
+
+                </button>
+
+
+                <button class="category-card" data-category="Education">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=700&q=80"
+                        alt="Students studying">
+
+                    <div class="category-shade"></div>
+
+                    <div class="category-content">
+                        <span class="category-icon">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </span>
+
+                        <h3>Education</h3>
+                        <p>Scholarships and student assistance</p>
+                    </div>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square category-arrow"></i>
+
+                </button>
+
+
+                <button class="category-card" data-category="Women">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=700&q=80"
+                        alt="Portrait of a woman">
+
+                    <div class="category-shade"></div>
+
+                    <div class="category-content">
+                        <span class="category-icon">
+                            <i class="fa-solid fa-people-group"></i>
+                        </span>
+
+                        <h3>Women & Family</h3>
+                        <p>Explore family and women-focused support</p>
+                    </div>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square category-arrow"></i>
+
+                </button>
+
+
+                <button class="category-card" data-category="Employment">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=700&q=80"
+                        alt="People working together">
+
+                    <div class="category-shade"></div>
+
+                    <div class="category-content">
+                        <span class="category-icon">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </span>
+
+                        <h3>Employment</h3>
+                        <p>Skills, training and career opportunities</p>
+                    </div>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square category-arrow"></i>
+
+                </button>
+
+            </div>
+
+
+            <!-- BOTTOM BANNER -->
+            <div class="bottom-banner">
+
+                <div class="banner-icon">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+
+                <div>
+                    <h3>Not sure where to start?</h3>
+                    <p>Tell our demo assistant what kind of support you need.</p>
+                </div>
+
+                <button class="banner-button" data-go="assistant">
+                    Ask a question
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </div>
+
+            <p class="disclaimer">
+                Student project demonstration · Sample information only.
+                Verify scheme details with official government sources.
             </p>
 
-            <button onclick="showMessage('e-Sevai Locator opened')">
-                Find Centre
-            </button>
+        </section>
 
-        </div>
 
 
-        <div class="card">
+        <!-- FIND SCHEMES PAGE -->
+        <section class="view" id="schemes">
 
-            <h3>Saved Schemes</h3>
+            <div class="page-intro">
 
-            <p>
-                Save important government schemes
-                for future reference.
-            </p>
+                <p class="eyebrow">PERSONALIZED DISCOVERY</p>
 
-            <button onclick="showMessage('Saved schemes opened')">
-                View Saved
-            </button>
+                <h1>Find schemes <span>for you.</span></h1>
 
-        </div>
+                <p>
+                    Enter your details to explore sample schemes that may
+                    match your profile.
+                </p>
 
+            </div>
 
-        <div class="card">
 
-            <h3>Notifications</h3>
+            <div class="finder-layout">
 
-            <p>
-                Get updates about newly added and
-                updated government schemes.
-            </p>
+                <div class="form-card">
 
-            <button onclick="showMessage('Notifications opened')">
-                View Updates
-            </button>
+                    <div class="card-title-row">
 
-        </div>
+                        <div class="title-icon">
+                            <i class="fa-solid fa-user-pen"></i>
+                        </div>
 
+                        <div>
+                            <h2>Your profile</h2>
+                            <p>Fill in the details below.</p>
+                        </div>
 
-        <div class="card">
+                    </div>
 
-            <h3>Admin Dashboard</h3>
 
-            <p>
-                Manage schemes, users and
-                government scheme information.
-            </p>
+                    <form id="profileForm">
 
-            <button onclick="showMessage('Admin dashboard opened')">
-                Admin Login
-            </button>
+                        <div class="form-grid">
 
-        </div>
+                            <div class="form-group">
+                                <label for="age">Age</label>
 
-    </div>
+                                <input
+                                    type="number"
+                                    id="age"
+                                    min="1"
+                                    max="120"
+                                    placeholder="Enter your age"
+                                    required>
+                            </div>
 
-</section>
 
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
 
-<footer>
+                                <select id="gender" required>
+                                    <option value="">Select gender</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Other">Other</option>
+                                    <option value="Prefer not to say">
+                                        Prefer not to say
+                                    </option>
+                                </select>
+                            </div>
 
-    <p>
-        © 2026 Tamil AI Government Scheme Navigator
-    </p>
 
-    <p>
-        AI-Powered Access to Government Schemes
-    </p>
+                            <div class="form-group">
+                                <label for="occupation">Occupation</label>
 
-</footer>
+                                <select id="occupation" required>
+                                    <option value="">Select occupation</option>
+                                    <option value="Student">Student</option>
+                                    <option value="Farmer">Farmer</option>
+                                    <option value="Employee">Employee</option>
+                                    <option value="Self-employed">Self-employed</option>
+                                    <option value="Unemployed">Unemployed</option>
+                                    <option value="Homemaker">Homemaker</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
 
 
-<script>
+                            <div class="form-group">
+                                <label for="income">Annual family income</label>
 
-function searchScheme() {
+                                <select id="income" required>
+                                    <option value="">Select income range</option>
+                                    <option value="0">Below ₹1 lakh</option>
+                                    <option value="100000">₹1–2.5 lakh</option>
+                                    <option value="250000">₹2.5–5 lakh</option>
+                                    <option value="500000">Above ₹5 lakh</option>
+                                </select>
+                            </div>
 
-    let search = document.getElementById("searchInput").value;
 
-    let result = document.getElementById("searchResult");
+                            <div class="form-group full-width">
+                                <label for="district">District</label>
 
-    if (search.trim() === "") {
+                                <select id="district" required>
+                                    <option value="">Select your district</option>
+                                    <option>Chennai</option>
+                                    <option>Coimbatore</option>
+                                    <option>Madurai</option>
+                                    <option>Salem</option>
+                                    <option>Tiruchirappalli</option>
+                                    <option>Tirunelveli</option>
+                                    <option>Erode</option>
+                                    <option>Thanjavur</option>
+                                    <option>Vellore</option>
+                                    <option>Thoothukudi</option>
+                                    <option>Dharmapuri</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
 
-        result.innerHTML = "Please enter a scheme name.";
+                        </div>
 
-    } else {
 
-        result.innerHTML =
-            "Searching for: " + search;
+                        <button type="submit" class="primary-button full-button">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            Find Matching Schemes
+                        </button>
 
-    }
+                        <p class="form-note">
+                            <i class="fa-solid fa-circle-info"></i>
+                            This demo uses sample rules, not official eligibility
+                            verification.
+                        </p>
 
-}
+                    </form>
 
+                </div>
 
-function sendMessage() {
 
-    let input = document.getElementById("chatInput");
+                <div class="finder-side-image">
 
-    let message = input.value.trim();
+                    <img
+                        src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1000&q=85"
+                        alt="People in a community setting">
 
-    let messages = document.getElementById("messages");
+                    <div class="finder-image-overlay"></div>
 
-    if (message === "") {
-        return;
-    }
+                    <div class="finder-image-content">
 
-    messages.innerHTML +=
-        '<div class="user-message">' +
-        message +
-        '</div>';
+                        <span class="image-label">
+                            <i class="fa-solid fa-heart"></i>
+                            ACCESS FOR EVERYONE
+                        </span>
 
-    messages.innerHTML +=
-        '<div class="bot-message">' +
-        'I can help you find government schemes. ' +
-        'Please provide your age, occupation and income for eligibility matching.' +
-        '</div>';
+                        <h2>The right support can open new possibilities.</h2>
 
-    input.value = "";
+                        <p>
+                            Explore opportunities in education, agriculture,
+                            employment and family welfare.
+                        </p>
 
-    messages.scrollTop = messages.scrollHeight;
+                    </div>
 
-}
+                </div>
 
+            </div>
 
-function checkEligibility() {
 
-    let age =
-        document.getElementById("age").value;
+            <div class="results-section">
 
-    let occupation =
-        document.getElementById("occupation").value;
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">YOUR DISCOVERY RESULTS</p>
+                        <h2 id="resultsHeading">Suggested schemes</h2>
+                        <p id="resultsMessage">
+                            Complete your profile to view sample recommendations.
+                        </p>
+                    </div>
+                </div>
 
-    let income =
-        document.getElementById("income").value;
+                <div id="schemeResults" class="scheme-grid">
 
-    let result =
-        document.getElementById("result");
+                    <div class="empty-state">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <h3>Your recommendations will appear here</h3>
+                        <p>Complete your profile to explore sample matches.</p>
+                    </div>
 
-    if (age === "" ||
-        occupation === "" ||
-        income === "") {
+                </div>
 
-        result.style.display = "block";
+            </div>
 
-        result.innerHTML =
-            "Please fill all the details.";
+        </section>
 
-        return;
-    }
 
-    result.style.display = "block";
 
-    result.innerHTML =
-        "<strong>Eligibility Check Completed</strong><br><br>" +
-        "Age: " + age + "<br>" +
-        "Occupation: " + occupation + "<br>" +
-        "Annual Income: ₹" + income +
-        "<br><br>" +
-        "Your details can now be matched with available government schemes.";
-}
+        <!-- AI ASSISTANT PAGE -->
+        <section class="view" id="assistant">
 
+            <div class="page-intro">
 
-function showMessage(message) {
+                <p class="eyebrow">LANGUAGE-FRIENDLY GUIDANCE</p>
 
-    alert(message);
+                <h1>Meet your <span>AI assistant.</span></h1>
 
-}
+                <p>
+                    Ask questions about scheme categories and application
+                    preparation in English or Tamil.
+                </p>
 
-</script>
+            </div>
+
+
+            <div class="assistant-layout">
+
+                <div class="chat-card">
+
+                    <div class="chat-header">
+
+                        <div class="assistant-avatar">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+
+                        <div>
+                            <h2>TamilAI Assistant</h2>
+                            <p>
+                                <span class="live-dot"></span>
+                                Demo assistant available
+                            </p>
+                        </div>
+
+                        <span class="demo-tag">DEMO</span>
+
+                    </div>
+
+
+                    <div id="chatMessages" class="chat-messages">
+
+                        <div class="message assistant-message">
+
+                            <div class="message-avatar">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+
+                            <div class="message-bubble">
+                                <p>
+                                    Vanakkam! வணக்கம்! 👋
+                                </p>
+
+                                <p>
+                                    I can help you explore sample scheme
+                                    categories and explain what information
+                                    you may need.
+                                </p>
+
+                                <span class="message-time">TamilAI Assistant</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="suggested-prompts">
+
+                        <button class="prompt-button" data-prompt="I am a student">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            Student schemes
+                        </button>
+
+                        <button class="prompt-button" data-prompt="I am a farmer">
+                            <i class="fa-solid fa-seedling"></i>
+                            Farmer support
+                        </button>
+
+                        <button class="prompt-button" data-prompt="What documents do I need?">
+                            <i class="fa-solid fa-file-lines"></i>
+                            Required documents
+                        </button>
+
+                    </div>
+
+
+                    <form id="chatForm" class="chat-input-area">
+
+                        <button
+                            type="button"
+                            id="voiceButton"
+                            class="voice-button"
+                            aria-label="Use voice input"
+                            title="Use voice input">
+
+                            <i class="fa-solid fa-microphone"></i>
+
+                        </button>
+
+                        <input
+                            type="text"
+                            id="chatInput"
+                            placeholder="Ask something in English or Tamil..."
+                            autocomplete="off"
+                            required>
+
+                        <button type="submit" class="send-button" aria-label="Send message">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+
+                    </form>
+
+                    <p id="voiceStatus" class="voice-status"></p>
+
+                    <p class="chat-disclaimer">
+                        Demo responses only. Do not enter Aadhaar numbers,
+                        bank details or other sensitive personal information.
+                    </p>
+
+                </div>
+
+
+                <div class="assistant-image-card">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=85"
+                        alt="Person using a computer for digital services">
+
+                    <div class="assistant-image-overlay"></div>
+
+                    <div class="assistant-image-content">
+
+                        <span class="image-label">
+                            <i class="fa-solid fa-language"></i>
+                            BUILT FOR ACCESSIBILITY
+                        </span>
+
+                        <h2>Technology should speak your language.</h2>
+
+                        <p>
+                            A student project exploring how conversational
+                            interfaces can simplify scheme discovery.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SERVICE CENTRES PAGE -->
+        <section class="view" id="centres">
+
+            <div class="page-intro">
+
+                <p class="eyebrow">LOCAL DIGITAL ASSISTANCE</p>
+
+                <h1>Find a service <span>centre.</span></h1>
+
+                <p>
+                    Explore nearby Common Service Centres and e-Sevai
+                    assistance using Google Maps.
+                </p>
+
+            </div>
+
+
+            <div class="centre-hero">
+
+                <img
+                    src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1500&q=85"
+                    alt="Digital technology and online services">
+
+                <div class="centre-hero-overlay"></div>
+
+                <div class="centre-hero-content">
+
+                    <span class="image-label">
+                        <i class="fa-solid fa-location-dot"></i>
+                        LOCAL SERVICE DISCOVERY
+                    </span>
+
+                    <h2>Digital services, closer to home.</h2>
+
+                    <p>
+                        Search for assistance with government applications,
+                        certificates and other citizen services.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="centre-search-card">
+
+                <div class="title-icon">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                </div>
+
+                <div class="centre-search-copy">
+                    <h2>Search in your district</h2>
+                    <p>Select a district to open a location search in Google Maps.</p>
+                </div>
+
+                <div class="centre-search-controls">
+
+                    <label for="centreDistrict" class="sr-only">
+                        Select district
+                    </label>
+
+                    <select id="centreDistrict">
+                        <option value="Chennai">Chennai</option>
+                        <option value="Coimbatore">Coimbatore</option>
+                        <option value="Madurai">Madurai</option>
+                        <option value="Salem">Salem</option>
+                        <option value="Tiruchirappalli">Tiruchirappalli</option>
+                        <option value="Tirunelveli">Tirunelveli</option>
+                        <option value="Erode">Erode</option>
+                        <option value="Thanjavur">Thanjavur</option>
+                        <option value="Vellore">Vellore</option>
+                        <option value="Dharmapuri">Dharmapuri</option>
+                    </select>
+
+                    <button id="centreButton" class="primary-button">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        Find Centres
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="centre-info-grid">
+
+                <div class="centre-info-card">
+                    <div class="stat-icon blue">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+
+                    <h3>Common Service Centres</h3>
+
+                    <p>
+                        Search for CSC locations that may provide assisted
+                        access to digital public services.
+                    </p>
+
+                </div>
+
+
+                <div class="centre-info-card">
+                    <div class="stat-icon green">
+                        <i class="fa-solid fa-file-circle-check"></i>
+                    </div>
+
+                    <h3>e-Sevai Services</h3>
+
+                    <p>
+                        Look for e-Sevai centres that may assist with
+                        Tamil Nadu government services.
+                    </p>
+
+                </div>
+
+
+                <div class="centre-info-card">
+                    <div class="stat-icon orange">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </div>
+
+                    <h3>Before you visit</h3>
+
+                    <p>
+                        Check the centre's current hours, available services,
+                        fees and required documents.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<script src="script.js"></script>
 
 </body>
 </html>
