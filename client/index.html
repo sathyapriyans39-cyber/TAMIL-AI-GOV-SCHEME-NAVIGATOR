@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tamil AI Government Scheme Navigator | தமிழ் அரசு திட்டங்கள் AI வழிகாட்டி</title>
+  <meta name="description" content="Discover Tamil Nadu State and Central Government schemes in simple Tamil and English. Check eligibility, required documents, locate nearby e-Sevai centres, and voice AI assistant powered by Sarvam AI.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/leaflet.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Government Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-content">
+      <div class="gov-badge">
+        <span class="gov-badge-icon">🏛️</span>
+        <span data-i18n="top_gov_title">தமிழ்நாடு அரசு | அதிகாரப்பூர்வ அரசு நலத்திட்ட போர்டல்</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; font-size: 0.78rem;">
+        <span data-i18n="top_helpline">உதவி எண்: 1100</span>
+        <span>|</span>
+        <a href="https://www.tnesevai.tn.gov.in" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1;" data-i18n="top_portal_link">tnesevai.tn.gov.in ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="site-header">
+    <div class="container main-navbar">
+      <div class="brand-wrapper">
+        <div class="brand-emblem">த</div>
+        <div class="brand-text">
+          <h1 data-i18n="brand_title">Tamil AI Scheme Navigator</h1>
+          <div class="brand-subtitle" data-i18n="brand_subtitle">தமிழ் அரசு திட்டங்கள் AI வழிகாட்டி</div>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#schemes" class="active" data-i18n="nav_schemes">திட்டங்கள்</a></li>
+          <li><a href="#eligibility" data-i18n="nav_eligibility">தகுதி சரிபார்ப்பு</a></li>
+          <li><a href="#chatbot" data-i18n="nav_assistant">AI வழிகாட்டி</a></li>
+          <li><a href="#centres" data-i18n="nav_centres">இ-சேவை மையங்கள்</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Language Switcher -->
+        <button id="langToggleBtn" onclick="toggleLanguage()" class="btn-lang" data-i18n-title="lang_btn_title" title="ஆங்கிலத்திற்கு மாற்ற / Switch to English">
+          English
+        </button>
+
+        <!-- Notification Bell -->
+        <button onclick="toggleNotifDrawer()" class="btn-notif" title="அறிவிப்புகள் / Notifications">
+          🔔
+          <span id="notifBadge" class="notif-badge" style="display: none;">0</span>
+        </button>
+
+        <!-- User Authentication Status -->
+        <div id="navAuthContainer">
+          <a href="login.html" class="user-status-btn btn-login" data-i18n="nav_login">
+            🔑 உள்நுழை
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-content">
+      <h2 class="hero-title" data-i18n="hero_title">அரசு நலத்திட்டங்களை எளிதாக கண்டறியுங்கள்</h2>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">
+        தமிழ்நாடு மற்றும் மத்திய அரசின் கல்வி, மகளிர் நலம், விவசாயம், மருத்துவம் மற்றும் தொழில் நலத்திட்டங்களை எளிய தமிழில் தெரிந்துகொள்ளுங்கள்.
+      </p>
+
+      <!-- Main Search Box -->
+      <div class="hero-search-wrapper">
+        <input
+          type="text"
+          id="schemeSearchInput"
+          class="search-input-field"
+          data-i18n-placeholder="hero_search_placeholder"
+          placeholder="திட்டத்தின் பெயர் அல்லது முக்கிய சொல்லை உள்ளிடவும்... (எ.கா: மகளிர் உரிமை, கல்வி, PM-KISAN)"
+        >
+        <button onclick="applyFilters()" class="btn-search">
+          <span>🔍</span> <span data-i18n="btn_search">தேடு</span>
+        </button>
+      </div>
+
+      <!-- Quick Category Filter Chips -->
+      <div class="quick-category-pills">
+        <button onclick="filterByCategory('ALL')" class="cat-pill active" data-cat="ALL" data-i18n="cat_all">அனைத்தும்</button>
+        <button onclick="filterByCategory('Women Welfare')" class="cat-pill" data-cat="Women Welfare" data-i18n="cat_women">👩 மகளிர் நலம்</button>
+        <button onclick="filterByCategory('Education')" class="cat-pill" data-cat="Education" data-i18n="cat_education">🎓 கல்வி & உதவித்தொகை</button>
+        <button onclick="filterByCategory('Farmer Schemes')" class="cat-pill" data-cat="Farmer Schemes" data-i18n="cat_farmer">🌾 விவசாயம்</button>
+        <button onclick="filterByCategory('Health')" class="cat-pill" data-cat="Health" data-i18n="cat_health">🏥 மருத்துவம்</button>
+        <button onclick="filterByCategory('MSME')" class="cat-pill" data-cat="MSME" data-i18n="cat_msme">💼 தொழில் கடன்</button>
+        <button onclick="filterByCategory('Housing')" class="cat-pill" data-cat="Housing" data-i18n="cat_housing">🏠 வீட்டுவசதி</button>
+      </div>
+
+      <!-- Government Level Toggle -->
+      <div class="level-toggle-container">
+        <div class="level-toggle-group">
+          <button onclick="filterByLevel('ALL')" class="level-btn active" data-level="ALL" data-i18n="level_all">அனைத்து திட்டங்கள்</button>
+          <button onclick="filterByLevel('TAMIL_NADU')" class="level-btn" data-level="TAMIL_NADU" data-i18n="level_tn">🏛️ தமிழ்நாடு அரசு</button>
+          <button onclick="filterByLevel('CENTRAL')" class="level-btn" data-level="CENTRAL" data-i18n="level_central">🇮🇳 மத்திய அரசு</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Schemes Directory -->
+  <section id="schemes" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="schemes_section_tag">SCHEME CATALOGUE</span>
+        <h2 class="section-title" data-i18n="schemes_section_title">அரசு நலத்திட்டங்கள் பட்டியல்</h2>
+        <p class="section-desc" data-i18n="schemes_section_desc">அனைத்து தகுதி வரம்புகள், நிதிப் பயன்கள் மற்றும் தேவையான ஆவணங்களுடன் கூடிய சரிபார்க்கப்பட்ட தகவல்கள்.</p>
+      </div>
+
+      <!-- Schemes Filter Toolbar -->
+      <div class="scheme-toolbar">
+        <div class="toolbar-filters">
+          <select id="categoryFilter" onchange="filterByCategory(this.value)" class="form-select">
+            <option value="ALL" data-i18n="opt_all_categories">அனைத்து பிரிவுகள்</option>
+            <option value="Women Welfare" data-i18n="opt_women_welfare">மகளிர் நலம்</option>
+            <option value="Education" data-i18n="opt_education">கல்வி & உதவித்தொகை</option>
+            <option value="Farmer Schemes" data-i18n="opt_farmer_schemes">விவசாயிகள் நலம்</option>
+            <option value="Health" data-i18n="opt_health">மருத்துவம் & சுகாதாரம்</option>
+            <option value="MSME" data-i18n="opt_msme">சுயதொழில் & MSME</option>
+            <option value="Housing" data-i18n="opt_housing">வீட்டுவசதி</option>
+            <option value="Social Welfare" data-i18n="opt_social_welfare">சமூக நலம்</option>
+          </select>
+
+          <select id="sortSelect" onchange="applyFilters()" class="form-select">
+            <option value="default" data-i18n="sort_default">வரிசைப்படுத்து: பரிந்துரைக்கப்பட்டது</option>
+            <option value="benefit_desc" data-i18n="sort_benefit_desc">அதிகபட்ச நிதி பயன்</option>
+            <option value="benefit_asc" data-i18n="sort_benefit_asc">குறைந்தபட்ச நிதி பயன்</option>
+          </select>
+        </div>
+
+        <div id="schemesCount" class="scheme-count-badge" data-i18n="schemes_loading">
+          திட்டங்கள் கணக்கிடப்படுகிறது...
+        </div>
+      </div>
+
+      <!-- Schemes Card Grid -->
+      <div id="schemesGrid" class="schemes-grid">
+        <!-- Rendered dynamically by schemes.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Eligibility Checker -->
+  <section id="eligibility" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="eligibility_section_tag">SMART ELIGIBILITY ENGINE</span>
+        <h2 class="section-title" data-i18n="eligibility_section_title">உங்கள் தகுதியை சரிபார்க்கவும்</h2>
+        <p class="section-desc" data-i18n="eligibility_section_desc">உங்கள் வயது, கல்வி, பாலினம் மற்றும் வருமான விவரங்களை உள்ளிட்டு உங்களுக்கு கிடைக்கக்கூடிய அரசு திட்டங்களை கண்டறியுங்கள்.</p>
+      </div>
+
+      <div class="eligibility-container">
+        <form id="eligibilityForm" onsubmit="checkEligibility(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="eligibilityAge" data-i18n="label_age">வயது *</label>
+              <input type="number" id="eligibilityAge" class="form-input" min="1" max="110" placeholder="எ.கா: 21" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="eligibilityGender" data-i18n="label_gender">பாலினம் *</label>
+              <select id="eligibilityGender" class="form-select" required>
+                <option value="FEMALE" data-i18n="opt_female">பெண்</option>
+                <option value="MALE" data-i18n="opt_male">ஆண்</option>
+                <option value="TRANSGENDER" data-i18n="opt_transgender">மூன்றாம் பாலினம்</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="eligibilityDistrict" data-i18n="label_district">மாவட்டம் *</label>
+              <select id="eligibilityDistrict" class="form-select" required>
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="eligibilityOccupation" data-i18n="label_occupation">தொழில் நிலை</label>
+              <select id="eligibilityOccupation" class="form-select">
+                <option value="Student" data-i18n="opt_student">மாணவர்</option>
+                <option value="Farmer" data-i18n="opt_farmer">விவசாயி</option>
+                <option value="Self-Employed" data-i18n="opt_self_employed">சுயதொழில் / சிறு வணிகம்</option>
+                <option value="Unemployed" data-i18n="opt_unemployed">வேலையில்லாதவர்</option>
+                <option value="Private Employee" data-i18n="opt_private_employee">தனியார் துறை பணியாளர்</option>
+                <option value="Govt Employee" data-i18n="opt_govt_employee">அரசு பணியாளர்</option>
+                <option value="Daily Wage" data-i18n="opt_daily_wage">தினக்கூலி / தொழிலாளி</option>
+                <option value="Homemaker" data-i18n="opt_homemaker">இல்லத்தரசி</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="eligibilityStudent" data-i18n="label_is_student">தற்போது பள்ளி / கல்லூரி மாணவரா?</label>
+              <select id="eligibilityStudent" class="form-select">
+                <option value="false" data-i18n="opt_no">இல்லை</option>
+                <option value="true" data-i18n="opt_yes">ஆம்</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="eligibilityGovtSchool" data-i18n="label_govt_school">அரசுப் பள்ளியில் (6 முதல் 12 வரை) படித்தவரா?</label>
+              <select id="eligibilityGovtSchool" class="form-select">
+                <option value="true" data-i18n="opt_yes">ஆம்</option>
+                <option value="false" data-i18n="opt_no">இல்லை</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="eligibilityIncome" data-i18n="label_income">ஆண்டு குடும்ப வருமானம் (₹)</label>
+              <input type="number" id="eligibilityIncome" class="form-input" placeholder="எ.கா: 180000" value="200000">
+              <span class="form-help" data-i18n="help_income">வருமான வரம்பை ஒப்பிட்டு தகுதியை சரிபார்க்க உதவும்.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="eligibilityCommunity" data-i18n="label_community">சமூகப் பிரிவு</label>
+              <select id="eligibilityCommunity" class="form-select">
+                <option value="BC">BC (பிற்படுத்தப்பட்டோர்)</option>
+                <option value="MBC">MBC (மிகவும் பிற்படுத்தப்பட்டோர்)</option>
+                <option value="SC">SC (ஆதிதிராவிடர்)</option>
+                <option value="ST">ST (பழங்குடியினர்)</option>
+                <option value="OC">OC (பொதுப்பிரிவு)</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit-eligibility">
+            <span>✨</span> <span data-i18n="btn_check_eligibility">என் தகுதியைச் சரிபார்க்க</span>
+          </button>
+        </form>
+
+        <!-- Results Output Area -->
+        <div id="eligibilityResults" class="eligibility-results-wrapper" style="display: none;">
+          <!-- Populated dynamically by app.js -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: AI Assistant Chatbot with Voice Input & Output -->
+  <section id="chatbot" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="chatbot_section_tag">AI SCHEME ASSISTANT</span>
+        <h2 class="section-title" data-i18n="chatbot_section_title">அரசு திட்டங்கள் AI வழிகாட்டி</h2>
+        <p class="section-desc" data-i18n="chatbot_section_desc">அரசு திட்டங்கள், தேவையான ஆவணங்கள் மற்றும் விண்ணப்பிக்கும் வழிமுறைகள் குறித்த உங்கள் சந்தேகங்களுக்கு உடனடி விடை பெறுங்கள்.</p>
+      </div>
+
+      <div class="chatbot-container">
+        <!-- Chat Header -->
+        <div class="chat-header">
+          <div class="chat-header-info">
+            <div class="chat-avatar">🤖</div>
+            <div>
+              <div style="font-weight: 700; font-size: 1.05rem;" data-i18n="chat_assistant_name">Tamil AI Assistant</div>
+              <div style="font-size: 0.78rem; opacity: 0.9;" data-i18n="chat_assistant_subtitle">தமிழ்நாடு மற்றும் மத்திய அரசு திட்ட வழிகாட்டி</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <!-- Auto Voice Toggle Button (Sarvam TTS) -->
+            <button id="voiceAutoToggle" onclick="toggleAutoVoice()" class="btn-voice-toggle" title="தானியங்கி குரல் பதிலை இயக்க / Turn on auto voice readout">
+              🔈 குரல்: ஆஃப்
+            </button>
+            <div style="font-size: 0.75rem; background: rgba(255, 255, 255, 0.2); padding: 0.25rem 0.65rem; border-radius: var(--radius-full);" data-i18n="chat_verified_badge">
+              🟢 சரிபார்க்கப்பட்ட அரசு தரவுகள்
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat History Area -->
+        <div id="chatMessages" class="chat-messages">
+          <!-- Populated dynamically by chatbot.js -->
+        </div>
+
+        <!-- Quick Questions Chips -->
+        <div class="quick-prompts-bar">
+          <!-- Populated dynamically by chatbot.js renderQuickPrompts() -->
+        </div>
+
+        <!-- Voice Input Status Bar (visible during recording / transcribing) -->
+        <div id="voiceInputStatus" class="voice-status-bar" style="display: none;"></div>
+
+        <!-- Chat Input Bar with Sarvam AI Voice Input -->
+        <div class="chat-input-bar">
+          <input
+            type="text"
+            id="chatInput"
+            class="chat-input"
+            data-i18n-placeholder="chat_input_placeholder"
+            placeholder="உங்கள் கேள்வியை தட்டச்சு செய்யவும்... அல்லது 🎙️ பேசி கேட்கவும்"
+          >
+          <!-- Sarvam AI Voice Input (Mic Button) -->
+          <button
+            type="button"
+            id="btnVoiceInput"
+            onclick="toggleVoiceRecording()"
+            class="btn-mic"
+            data-i18n-title="voice_recording_btn_title"
+            title="குரல் மூலம் கேள்வி கேட்க அழுத்தவும் (Sarvam AI)"
+          >
+            🎙️
+          </button>
+          <!-- Send Button -->
+          <button onclick="sendChatMessage()" class="btn-send" data-i18n="btn_chat_send">
+            அனுப்பு
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: e-Sevai Centres Locator -->
+  <section id="centres" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="centres_section_tag">SERVICE CENTRES</span>
+        <h2 class="section-title" data-i18n="centres_section_title">அருகிலுள்ள இ-சேவை மையங்கள்</h2>
+        <p class="section-desc" data-i18n="centres_section_desc">அரசு சான்றிதழ்கள் பெறவும், திட்டங்களுக்கு விண்ணப்பிக்கவும் உங்கள் மாவட்டத்திலுள்ள அங்கீகரிக்கப்பட்ட இ-சேவை மையங்களை கண்டறியுங்கள்.</p>
+      </div>
+
+      <!-- Centres Search Bar -->
+      <div class="scheme-toolbar" style="max-width: 800px; margin: 0 auto 2rem;">
+        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; width: 100%;">
+          <select id="centreDistrictFilter" onchange="loadCentres()" class="form-select" style="flex: 1; min-width: 200px;">
+            <option value="ALL" data-i18n="opt_all_districts">அனைத்து மாவட்டங்கள்</option>
+          </select>
+
+          <input
+            type="text"
+            id="centreSearchInput"
+            class="form-input"
+            data-i18n-placeholder="centre_search_placeholder"
+            placeholder="வட்டம் அல்லது ஊர் பெயர்... (Taluk / Town / PIN)"
+            style="flex: 1.5; min-width: 200px;"
+            onkeyup="if(event.key==='Enter') loadCentres()"
+          >
+
+          <button onclick="loadCentres()" class="btn-search">
+            <span data-i18n="btn_find_centres">கண்டறி</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive e-Sevai Centres Map -->
+      <div class="centres-map-wrapper">
+        <div class="map-toolbar">
+          <div class="map-status-info">
+            <span class="map-badge">
+              <span class="map-pulse-dot"></span>
+              <span data-i18n="map_banner_title">தமிழ்நாடு இ-சேவை ஊடாடும் வரைபடம்</span>
+            </span>
+            <span id="mapCentresCount" class="map-count">...</span>
+          </div>
+          <div class="map-actions">
+            <button type="button" onclick="locateUserOnMap()" class="btn-map-action" id="btnLocateNearMe" title="என் அருகிலுள்ள மையங்கள் / Locate Near Me">
+              <span data-i18n="btn_locate_near_me">📍 அருகிலுள்ள மையங்கள்</span>
+            </button>
+            <button type="button" onclick="resetMapView()" class="btn-map-action" id="btnResetMap" title="வரைபடத்தை மீட்டமை / Reset Map View">
+              <span data-i18n="btn_reset_map">🔄 முழு தமிழ்நாடு</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="centresMap" class="centres-map"></div>
+
+        <div class="map-legend">
+          <span data-i18n="map_legend_text">🏛️ அங்கீகரிக்கப்பட்ட இ-சேவை மையங்கள் | பின்களை கிளிக் செய்து விவரங்கள் & வழிகாட்டியை பெறலாம்</span>
+        </div>
+      </div>
+
+      <!-- Centres Grid -->
+      <div id="centresGrid" class="centres-grid">
+        <!-- Populated dynamically by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Scheme Details Modal -->
+  <div id="schemeModal" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div style="font-weight: 700; color: var(--primary);" data-i18n="modal_title">🏛️ அரசு திட்ட விவரம்</div>
+        <button onclick="closeSchemeModal()" class="modal-close-btn" data-i18n-title="modal_close" title="மூடுக">&times;</button>
+      </div>
+      <div id="modalSchemeContent" class="modal-body">
+        <!-- Rendered dynamically -->
+      </div>
+      <div class="modal-footer">
+        <button onclick="closeSchemeModal()" class="user-status-btn" style="background: var(--surface-alt); color: var(--text-main);" data-i18n="modal_close">
+          மூடுக
+        </button>
+        <a id="modalApplyLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-search" data-i18n="modal_apply">
+          அதிகாரப்பூர்வ தளத்தில் விண்ணப்பிக்க ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- In-App Notifications Modal -->
+  <div id="notifModal" class="modal-overlay">
+    <div class="modal-dialog" style="max-width: 550px;">
+      <div class="modal-header">
+        <div style="font-weight: 700; color: var(--primary);" data-i18n="notif_title">🔔 சமீபத்திய அறிவிப்புகள்</div>
+        <button onclick="toggleNotifDrawer()" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 0;">
+        <ul id="notifList" style="list-style: none;">
+          <!-- Populated dynamically -->
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button onclick="toggleNotifDrawer()" class="user-status-btn btn-login" data-i18n="notif_close">
+          சரி
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 data-i18n="brand_title">Tamil AI Scheme Navigator</h4>
+          <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.6;" data-i18n="footer_desc">
+            தமிழ்நாட்டு மக்கள் அரசு நலத்திட்டங்களை எளிதாக அறிந்துகொள்ளவும், தகுதியை சோதிக்கவும், தேவையான ஆவணங்களுடன் விண்ணப்பிக்கவும் உருவாக்கப்பட்ட எளிய வழிகாட்டி தளம்.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_col_portals">அதிகாரப்பூர்வ போர்ட்டல்கள்</h4>
+          <ul class="footer-links">
+            <li><a href="https://www.tn.gov.in" target="_blank" rel="noopener noreferrer" data-i18n="footer_link_tn">🏛️ தமிழ்நாடு அரசு அதிகாரப்பூர்வ தளம் (tn.gov.in)</a></li>
+            <li><a href="https://www.tnesevai.tn.gov.in" target="_blank" rel="noopener noreferrer" data-i18n="footer_link_esevai">🏢 தமிழ்நாடு இ-சேவை போர்டல் (tnesevai.tn.gov.in)</a></li>
+            <li><a href="https://www.india.gov.in" target="_blank" rel="noopener noreferrer" data-i18n="footer_link_india">🇮🇳 இந்திய அரசு தேசிய போர்டல் (india.gov.in)</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_col_features">முக்கிய அம்சங்கள்</h4>
+          <ul class="footer-links">
+            <li><a href="#schemes" data-i18n="footer_feat_schemes">திட்டங்கள் தேடல்</a></li>
+            <li><a href="#eligibility" data-i18n="footer_feat_eligibility">தகுதி சரிபார்ப்பு</a></li>
+            <li><a href="#chatbot" data-i18n="footer_feat_chatbot">AI உதவியாளர்</a></li>
+            <li><a href="#centres" data-i18n="footer_feat_centres">இ-சேவை மையங்கள்</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_col_support">உதவி & தொடர்பு</h4>
+          <p style="font-size: 0.85rem; color: #cbd5e1;" data-i18n="footer_helpline_text">அரசு பொது உதவி எண்: 1100</p>
+          <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 0.5rem;" data-i18n="footer_cmcell_text">முதலமைச்சரின் தனிப்பிரிவு: cmcell.tn.gov.in</p>
+          <div style="margin-top: 1rem;">
+            <a href="login.html" style="color: var(--accent); font-weight: 600; font-size: 0.85rem;" data-i18n="footer_login_link">🔑 நிர்வாகி / பயனர் உள்நுழைவு</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p data-i18n="footer_copyright">© 2026 Tamil AI Government Scheme Navigator. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+        <p style="margin-top: 0.25rem;" data-i18n="footer_disclaimer">அறிவிப்பு: இந்த தளம் சரிபார்க்கப்பட்ட பொது அரசு தகவல்களை வழங்குகிறது. இறுதி தகுதி சம்பந்தப்பட்ட அரசுத் துறையினரால் மட்டுமே தீர்மானிக்கப்படும்.</p>
+        <div id="footerDbStatus" style="margin-top: 0.75rem; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.75rem; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; font-size: 0.75rem; color: #34d399;">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+          <span id="footerDbStatusText">MySQL Database: Connecting...</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="js/leaflet.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/schemes.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

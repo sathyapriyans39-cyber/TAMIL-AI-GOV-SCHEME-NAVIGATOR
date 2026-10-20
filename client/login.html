@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>உள்நுழைவு / பதிவு | Tamil AI Government Scheme Navigator</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    }
+    .auth-container {
+      max-width: 480px;
+      width: 100%;
+      margin: 3rem auto;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 1rem;
+      background: var(--surface-alt);
+      border: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .auth-tab.active {
+      background: #ffffff;
+      color: var(--primary);
+      border-bottom: 3px solid var(--primary);
+    }
+    .auth-body {
+      padding: 2rem;
+    }
+    .demo-creds-box {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.82rem;
+    }
+    .demo-creds-title {
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .demo-btn {
+      background: #e2e8f0;
+      border: 1px solid #cbd5e1;
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.25rem;
+      transition: background 0.2s;
+    }
+    .demo-btn:hover {
+      background: #cbd5e1;
+    }
+    .error-msg {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      margin-bottom: 1.25rem;
+      display: none;
+    }
+  </style>
+</head>
+<body class="auth-page">
+
+  <!-- Header -->
+  <div class="top-bar">
+    <div class="container top-bar-content">
+      <div class="gov-badge">
+        <span>🏛️ தமிழ்நாடு அரசு நலத்திட்ட போர்டல்</span>
+      </div>
+      <div>
+        <a href="index.html" style="color: #cbd5e1; font-size: 0.85rem;">← முகப்பு பக்கம் / Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="flex: 1; display: flex; align-items: center;">
+    <div class="auth-container">
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button id="tabLogin" class="auth-tab active" onclick="switchAuthTab('login')">
+          உள்நுழை / Login
+        </button>
+        <button id="tabRegister" class="auth-tab" onclick="switchAuthTab('register')">
+          பதிவு செய் / Register
+        </button>
+      </div>
+
+      <div class="auth-body">
+        <div id="authErrorMessage" class="error-msg"></div>
+
+        <!-- Login Form -->
+        <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+          <div class="form-group" style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="loginEmail">மின்னஞ்சல் முகவரி / Email Address *</label>
+            <input type="email" id="loginEmail" class="form-input" placeholder="name@example.com" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label class="form-label" for="loginPassword">கடவுச்சொல் / Password *</label>
+            <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+          </div>
+
+          <button type="submit" id="loginSubmitBtn" class="btn-submit-eligibility" style="padding: 0.75rem;">
+            உள்நுழை / Login
+          </button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="registerForm" onsubmit="handleRegisterSubmit(event)" style="display: none;">
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" for="regName">முழுப் பெயர் / Full Name *</label>
+            <input type="text" id="regName" class="form-input" placeholder="உங்கள் பெயர்" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" for="regEmail">மின்னஞ்சல் முகவரி / Email *</label>
+            <input type="email" id="regEmail" class="form-input" placeholder="name@example.com" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" for="regPassword">புதிய கடவுச்சொல் / Password (min 6 chars) *</label>
+            <input type="password" id="regPassword" class="form-input" placeholder="••••••••" minlength="6" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" for="regMobile">கைபேசி எண் / Mobile Number</label>
+            <input type="tel" id="regMobile" class="form-input" placeholder="9876543210">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" for="regDistrict">மாவட்டம் / District</label>
+            <select id="regDistrict" class="form-select">
+              <option value="Chennai">Chennai</option>
+              <option value="Madurai">Madurai</option>
+              <option value="Coimbatore">Coimbatore</option>
+              <option value="Tiruchirappalli">Tiruchirappalli</option>
+              <option value="Salem">Salem</option>
+              <option value="Tirunelveli">Tirunelveli</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label class="form-label" for="regOccupation">தொழில் நிலை / Occupation</label>
+            <select id="regOccupation" class="form-select">
+              <option value="Student">மாணவர் / Student</option>
+              <option value="Farmer">விவசாயி / Farmer</option>
+              <option value="Self-Employed">சுயதொழில் / Self-Employed</option>
+              <option value="Unemployed">வேலையில்லை / Unemployed</option>
+            </select>
+          </div>
+
+          <button type="submit" id="regSubmitBtn" class="btn-submit-eligibility" style="padding: 0.75rem;">
+            கணக்கு உருவாக்க / Create Account
+          </button>
+        </form>
+
+        <!-- College Demonstration / Viva Helper Box -->
+        <div class="demo-creds-box">
+          <div class="demo-creds-title">
+            <span>🎓</span> <span>Demo Accounts (College Viva & Testing)</span>
+          </div>
+          <div style="margin-bottom: 0.5rem;">
+            <strong>Citizen:</strong> kavitha@example.com / user123<br>
+            <button type="button" class="demo-btn" onclick="fillCreds('kavitha@example.com', 'user123')">
+              Auto-fill Citizen Login
+            </button>
+          </div>
+          <div>
+            <strong>Admin:</strong> admin@tamilnadugov.in / admin123<br>
+            <button type="button" class="demo-btn" onclick="fillCreds('admin@tamilnadugov.in', 'admin123')">
+              Auto-fill Admin Login
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    function switchAuthTab(tab) {
+      const isLogin = tab === 'login';
+      document.getElementById('tabLogin').classList.toggle('active', isLogin);
+      document.getElementById('tabRegister').classList.toggle('active', !isLogin);
+      document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
+      document.getElementById('registerForm').style.display = isLogin ? 'none' : 'block';
+      hideError();
+    }
+
+    function showError(msg) {
+      const err = document.getElementById('authErrorMessage');
+      err.textContent = msg;
+      err.style.display = 'block';
+    }
+
+    function hideError() {
+      const err = document.getElementById('authErrorMessage');
+      err.style.display = 'none';
+    }
+
+    function fillCreds(email, password) {
+      switchAuthTab('login');
+      document.getElementById('loginEmail').value = email;
+      document.getElementById('loginPassword').value = password;
+      hideError();
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      hideError();
+
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const btn = document.getElementById('loginSubmitBtn');
+
+      if (!email || !password) {
+        showError('Please enter both email and password.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'உள்நுழைகிறது... / Logging in...';
+
+      try {
+        const result = await loginUser(email, password);
+        showToast('Login successful! Welcome back.', 'success');
+        setTimeout(() => {
+          if (result.user && result.user.role === 'ADMIN') {
+            window.location.href = 'admin.html';
+          } else {
+            window.location.href = 'index.html';
+          }
+        }, 500);
+      } catch (err) {
+        showError(err.message || 'Login failed.');
+        btn.disabled = false;
+        btn.textContent = 'உள்நுழை / Login';
+      }
+    }
+
+    async function handleRegisterSubmit(e) {
+      e.preventDefault();
+      hideError();
+
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const mobile = document.getElementById('regMobile').value.trim();
+      const district = document.getElementById('regDistrict').value;
+      const occupation = document.getElementById('regOccupation').value;
+      const btn = document.getElementById('regSubmitBtn');
+
+      if (!name || !email || !password) {
+        showError('Please complete all required fields.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'கணக்கு உருவாக்கப்படுகிறது...';
+
+      try {
+        await registerUser({ name, email, password, mobile, district, occupation });
+        showToast('Registration successful! Welcome.', 'success');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 500);
+      } catch (err) {
+        showError(err.message || 'Registration failed.');
+        btn.disabled = false;
+        btn.textContent = 'கணக்கு உருவாக்க / Create Account';
+      }
+    }
+
+    // Redirect if already logged in
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getCurrentUser();
+      if (user) {
+        if (user.role === 'ADMIN') {
+          window.location.href = 'admin.html';
+        } else {
+          window.location.href = 'index.html';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

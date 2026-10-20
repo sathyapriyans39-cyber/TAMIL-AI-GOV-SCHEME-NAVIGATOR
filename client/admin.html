@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>நிர்வாக பலகை (Admin Dashboard) | Tamil AI Government Scheme Navigator</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .admin-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    .metric-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .metric-value {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 0.35rem 0;
+    }
+    .metric-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .table-container {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      box-shadow: var(--shadow-sm);
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    .admin-table th {
+      background: var(--surface-alt);
+      padding: 1rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      border-bottom: 1px solid var(--border);
+    }
+    .admin-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .admin-table tr:hover {
+      background: #fafbfc;
+    }
+    .action-btn-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-edit {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-delete {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body style="background: var(--bg-main);">
+
+  <!-- Admin Top Bar -->
+  <div class="site-header">
+    <div class="container main-navbar">
+      <div class="brand-wrapper">
+        <div class="brand-emblem" style="background: linear-gradient(135deg, #10b981, #059669);">⚙️</div>
+        <div class="brand-text">
+          <h1>Admin Portal: Scheme Management</h1>
+          <div class="brand-subtitle">தமிழ்நாடு அரசு நலத்திட்ட நிர்வாக பலகை</div>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <span id="adminNameBadge" class="user-status-btn btn-user">👤 Admin</span>
+        <a href="index.html" class="user-status-btn btn-login">🌐 குடிமக்கள் போர்டல் / Portal</a>
+        <button onclick="logoutUser()" class="user-status-btn btn-logout">வெளியேறு / Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container" style="padding: 2.5rem 1.25rem;">
+    <!-- Metrics Section -->
+    <div class="admin-metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">மொத்த திட்டங்கள் / Total Schemes</div>
+        <div id="metricTotalSchemes" class="metric-value">0</div>
+        <div style="font-size: 0.8rem; color: #166534;">🟢 Active in Portal</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">தமிழ்நாடு அரசு / State Schemes</div>
+        <div id="metricTnSchemes" class="metric-value">0</div>
+        <div style="font-size: 0.8rem; color: #0369a1;">🏛️ State Sponsored</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">மத்திய அரசு / Central Schemes</div>
+        <div id="metricCentralSchemes" class="metric-value">0</div>
+        <div style="font-size: 0.8rem; color: #b45309;">🇮🇳 Central Sponsored</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">பதிவு செய்த பயனர்கள் / Registered Users</div>
+        <div id="metricTotalUsers" class="metric-value">0</div>
+        <div style="font-size: 0.8rem; color: #6b21a8;">👥 Active Citizens</div>
+      </div>
+      <div class="metric-card" style="border-left: 4px solid #10b981;">
+        <div class="metric-label">MySQL தரவுத்தளம் / Database</div>
+        <div id="metricDbStatus" class="metric-value" style="font-size: 1.35rem; display: flex; align-items: center; gap: 0.5rem; color: #047857;">
+          <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#10b981;"></span>
+          <span>இணைக்கப்பட்டது</span>
+        </div>
+        <div id="metricDbDetails" style="font-size: 0.8rem; color: var(--text-muted);">tamil_scheme_navigator_db</div>
+      </div>
+    </div>
+
+    <!-- Toolbar: Search & Add Scheme Button -->
+    <div class="scheme-toolbar">
+      <div style="display: flex; gap: 0.75rem; flex: 1;">
+        <input
+          type="text"
+          id="adminSearchInput"
+          class="form-input"
+          placeholder="திட்டப் பெயரைத் தேடுக... / Search schemes table..."
+          style="max-width: 380px;"
+          onkeyup="filterAdminTable()"
+        >
+      </div>
+
+      <button onclick="openSchemeEditorModal()" class="btn-search" style="background-color: var(--success);">
+        <span>➕</span> <span>புதிய திட்டம் சேர்க்க / Add New Scheme</span>
+      </button>
+    </div>
+
+    <!-- Schemes Management Table -->
+    <div class="table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>திட்டம் / Scheme Name</th>
+            <th>நிலை / Level</th>
+            <th>வகை / Category</th>
+            <th>துறை / Department</th>
+            <th>நிதி பயன் / Benefit</th>
+            <th>நடவடிக்கை / Actions</th>
+          </tr>
+        </thead>
+        <tbody id="adminSchemesTableBody">
+          <tr>
+            <td colspan="6" style="text-align: center; padding: 2rem;">திட்டங்கள் ஏற்றப்படுகின்றன...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Add / Edit Scheme Modal -->
+  <div id="schemeEditorModal" class="modal-overlay">
+    <div class="modal-dialog" style="max-width: 800px;">
+      <div class="modal-header">
+        <div id="editorModalTitle" style="font-weight: 700; color: var(--primary);">
+          ➕ புதிய அரசு திட்டம் சேர்க்க / Add Government Scheme
+        </div>
+        <button onclick="closeSchemeEditorModal()" class="modal-close-btn">&times;</button>
+      </div>
+
+      <form id="schemeEditorForm" onsubmit="handleSchemeFormSubmit(event)">
+        <div class="modal-body">
+          <input type="hidden" id="editSchemeId">
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="editSchemeName">Scheme Name (English) *</label>
+              <input type="text" id="editSchemeName" class="form-input" placeholder="e.g. Tamil Puthalvan Scheme" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editTamilName">திட்டப் பெயர் (தமிழ்) *</label>
+              <input type="text" id="editTamilName" class="form-input" placeholder="எ.கா: தமிழ்ப் புதல்வன் திட்டம்" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editLevel">Government Level *</label>
+              <select id="editLevel" class="form-select" required>
+                <option value="TAMIL_NADU">🏛️ தமிழ்நாடு அரசு / Tamil Nadu</option>
+                <option value="CENTRAL">🇮🇳 மத்திய அரசு / Central Govt</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editCategory">Category *</label>
+              <select id="editCategory" class="form-select" required>
+                <option value="Education">கல்வி / Education</option>
+                <option value="Women Welfare">மகளிர் நலம் / Women Welfare</option>
+                <option value="Farmer Schemes">விவசாயிகள் நலம் / Farmer Schemes</option>
+                <option value="Health">மருத்துவம் / Health</option>
+                <option value="MSME">சுயதொழில் & கடன் / MSME</option>
+                <option value="Housing">வீட்டுவசதி / Housing</option>
+                <option value="Social Welfare">சமூக நலம் / Social Welfare</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editDepartment">Department (English)</label>
+              <input type="text" id="editDepartment" class="form-input" placeholder="e.g. Higher Education Department">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editTamilDepartment">அரசுத் துறை (தமிழ்)</label>
+              <input type="text" id="editTamilDepartment" class="form-input" placeholder="எ.கா: உயர்கல்வித் துறை">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editBenefits">Key Benefits (English) *</label>
+              <input type="text" id="editBenefits" class="form-input" placeholder="e.g. ₹1,000 monthly allowance" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editTamilBenefits">பயன்கள் (தமிழ்) *</label>
+              <input type="text" id="editTamilBenefits" class="form-input" placeholder="எ.கா: மாதம் ₹1,000 உதவித்தொகை" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editBenefitAmount">Annual Benefit Amount (₹)</label>
+              <input type="number" id="editBenefitAmount" class="form-input" placeholder="12000" value="12000">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editMaxIncome">Max Annual Income Ceiling (₹)</label>
+              <input type="number" id="editMaxIncome" class="form-input" placeholder="250000">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editGender">Gender Requirement</label>
+              <select id="editGender" class="form-select">
+                <option value="ALL">அனைவருக்கும் / All</option>
+                <option value="FEMALE">பெண்கள் மட்டும் / Female Only</option>
+                <option value="MALE">ஆண்கள் மட்டும் / Male Only</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editHelpline">Helpline Number</label>
+              <input type="text" id="editHelpline" class="form-input" placeholder="1100" value="1100">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" for="editDescription">Description (English)</label>
+            <textarea id="editDescription" class="form-input" rows="2" placeholder="Full scheme description..."></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" for="editTamilDescription">திட்ட விளக்கம் (தமிழ்)</label>
+            <textarea id="editTamilDescription" class="form-input" rows="2" placeholder="முழு விவரங்கள்..."></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" for="editDocuments">Required Documents (comma separated)</label>
+            <input type="text" id="editDocuments" class="form-input" placeholder="Aadhaar Card, Ration Card, College ID, Income Certificate">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editWebsite">Official Portal Application URL</label>
+            <input type="url" id="editWebsite" class="form-input" placeholder="https://www.tn.gov.in" value="https://www.tn.gov.in">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" onclick="closeSchemeEditorModal()" class="user-status-btn" style="background: var(--surface-alt); color: var(--text-main);">
+            ரத்து / Cancel
+          </button>
+          <button type="submit" id="saveSchemeSubmitBtn" class="btn-search" style="background-color: var(--success);">
+            சேமி / Save Scheme
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    let adminSchemesList = [];
+
+    // Check Admin Authentication
+    function verifyAdminAccess() {
+      const user = getCurrentUser();
+      const token = getAuthToken();
+
+      if (!token || !user || user.role !== 'ADMIN') {
+        alert('Access Denied. Administrator authorization required.');
+        window.location.href = 'login.html';
+        return false;
+      }
+
+      const nameBadge = document.getElementById('adminNameBadge');
+      if (nameBadge) nameBadge.textContent = `👤 ${user.name || 'Admin'}`;
+      return true;
+    }
+
+    // Load Metrics
+    async function loadAdminMetrics() {
+      const token = getAuthToken();
+      try {
+        const res = await fetch('/api/admin/metrics', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (data.success && data.data) {
+          document.getElementById('metricTotalSchemes').textContent = data.data.totalSchemes || 0;
+          document.getElementById('metricTnSchemes').textContent = data.data.tnCount || 0;
+          document.getElementById('metricCentralSchemes').textContent = data.data.centralCount || 0;
+          document.getElementById('metricTotalUsers').textContent = data.data.totalUsers || 0;
+        }
+
+        // Check MySQL Database Status
+        try {
+          const dbRes = await fetch('/api/db/status');
+          const dbData = await dbRes.json();
+          const dbStatusEl = document.getElementById('metricDbStatus');
+          const dbDetailsEl = document.getElementById('metricDbDetails');
+          if (dbData.connected) {
+            dbStatusEl.innerHTML = '<span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#10b981;"></span> <span>Connected</span>';
+            dbStatusEl.style.color = '#047857';
+            dbDetailsEl.textContent = `${dbData.database} (${dbData.host}:${dbData.port} | utf8mb4)`;
+          } else {
+            dbStatusEl.innerHTML = '<span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ef4444;"></span> <span>Fallback</span>';
+            dbStatusEl.style.color = '#dc2626';
+            dbDetailsEl.textContent = 'Using in-memory fallback';
+          }
+        } catch (dbE) {
+          console.warn('DB check error:', dbE);
+        }
+      } catch (err) {
+        console.error('Error loading admin metrics:', err);
+      }
+    }
+
+    // Load Schemes Table
+    async function loadAdminSchemes() {
+      const tbody = document.getElementById('adminSchemesTableBody');
+      try {
+        const res = await fetch('/api/schemes');
+        const data = await res.json();
+        if (data.success && Array.isArray(data.schemes)) {
+          adminSchemesList = data.schemes;
+          renderAdminTable(adminSchemesList);
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--danger);">Failed to load schemes: ${err.message}</td></tr>`;
+      }
+    }
+
+    // Render Table
+    function renderAdminTable(list) {
+      const tbody = document.getElementById('adminSchemesTableBody');
+      if (!list || list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 2rem;">No schemes found matching search.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(s => `
+        <tr>
+          <td>
+            <strong>${s.schemeName}</strong><br>
+            <span style="font-size: 0.8rem; color: var(--primary-light);">${s.tamilName || ''}</span>
+          </td>
+          <td>
+            <span class="badge ${s.governmentLevel === 'TAMIL_NADU' ? 'badge-tn' : 'badge-central'}">
+              ${s.governmentLevel === 'TAMIL_NADU' ? 'TN State' : 'Central'}
+            </span>
+          </td>
+          <td><span class="badge badge-cat">${s.category}</span></td>
+          <td style="font-size: 0.82rem; color: var(--text-muted);">${s.department}</td>
+          <td><strong>₹${Number(s.benefitAmount || 0).toLocaleString('en-IN')}</strong></td>
+          <td>
+            <div class="action-btn-group">
+              <button onclick="editScheme('${s.id}')" class="btn-edit" title="Edit Scheme">✏️ Edit</button>
+              <button onclick="deleteScheme('${s.id}', '${s.schemeName.replace(/'/g, "\\'")}')" class="btn-delete" title="Delete Scheme">🗑️ Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Filter Table
+    function filterAdminTable() {
+      const q = document.getElementById('adminSearchInput').value.toLowerCase().trim();
+      if (!q) {
+        renderAdminTable(adminSchemesList);
+        return;
+      }
+      const filtered = adminSchemesList.filter(s =>
+        s.schemeName.toLowerCase().includes(q) ||
+        (s.tamilName && s.tamilName.includes(q)) ||
+        s.category.toLowerCase().includes(q)
+      );
+      renderAdminTable(filtered);
+    }
+
+    // Open Modal for Add
+    function openSchemeEditorModal() {
+      document.getElementById('editorModalTitle').textContent = '➕ புதிய அரசு திட்டம் சேர்க்க / Add Government Scheme';
+      document.getElementById('editSchemeId').value = '';
+      document.getElementById('schemeEditorForm').reset();
+      document.getElementById('schemeEditorModal').classList.add('active');
+    }
+
+    // Open Modal for Edit
+    function editScheme(schemeId) {
+      const scheme = adminSchemesList.find(s => s.id === schemeId);
+      if (!scheme) return;
+
+      document.getElementById('editorModalTitle').textContent = `✏️ திட்டம் திருத்துக: ${scheme.schemeName}`;
+      document.getElementById('editSchemeId').value = scheme.id;
+      document.getElementById('editSchemeName').value = scheme.schemeName || '';
+      document.getElementById('editTamilName').value = scheme.tamilName || '';
+      document.getElementById('editLevel').value = scheme.governmentLevel || 'TAMIL_NADU';
+      document.getElementById('editCategory').value = scheme.category || 'Education';
+      document.getElementById('editDepartment').value = scheme.department || '';
+      document.getElementById('editTamilDepartment').value = scheme.tamilDepartment || '';
+      document.getElementById('editBenefits').value = scheme.benefits || '';
+      document.getElementById('editTamilBenefits').value = scheme.tamilBenefits || '';
+      document.getElementById('editBenefitAmount').value = scheme.benefitAmount || 0;
+      document.getElementById('editMaxIncome').value = scheme.eligibilityCriteria?.maxAnnualIncome || '';
+      document.getElementById('editGender').value = scheme.eligibilityCriteria?.gender || 'ALL';
+      document.getElementById('editHelpline').value = scheme.helpline || '1100';
+      document.getElementById('editDescription').value = scheme.description || '';
+      document.getElementById('editTamilDescription').value = scheme.tamilDescription || '';
+      document.getElementById('editDocuments').value = (scheme.documentsRequired || []).map(d => d.name).join(', ');
+      document.getElementById('editWebsite').value = scheme.applicationWebsite || 'https://www.tn.gov.in';
+
+      document.getElementById('schemeEditorModal').classList.add('active');
+    }
+
+    function closeSchemeEditorModal() {
+      document.getElementById('schemeEditorModal').classList.remove('active');
+    }
+
+    // Handle Form Submit (Add or Edit)
+    async function handleSchemeFormSubmit(e) {
+      e.preventDefault();
+
+      const schemeId = document.getElementById('editSchemeId').value;
+      const isEdit = Boolean(schemeId);
+
+      const schemePayload = {
+        schemeName: document.getElementById('editSchemeName').value.trim(),
+        tamilName: document.getElementById('editTamilName').value.trim(),
+        governmentLevel: document.getElementById('editLevel').value,
+        category: document.getElementById('editCategory').value,
+        department: document.getElementById('editDepartment').value.trim(),
+        tamilDepartment: document.getElementById('editTamilDepartment').value.trim(),
+        benefits: document.getElementById('editBenefits').value.trim(),
+        tamilBenefits: document.getElementById('editTamilBenefits').value.trim(),
+        benefitAmount: parseFloat(document.getElementById('editBenefitAmount').value) || 0,
+        maxAnnualIncome: document.getElementById('editMaxIncome').value ? parseFloat(document.getElementById('editMaxIncome').value) : null,
+        gender: document.getElementById('editGender').value,
+        helpline: document.getElementById('editHelpline').value.trim(),
+        description: document.getElementById('editDescription').value.trim(),
+        tamilDescription: document.getElementById('editTamilDescription').value.trim(),
+        documents: document.getElementById('editDocuments').value.trim(),
+        applicationWebsite: document.getElementById('editWebsite').value.trim()
+      };
+
+      // Validation
+      if (!schemePayload.schemeName || !schemePayload.tamilName || !schemePayload.benefits) {
+        showToast('Please fill all required scheme fields.', 'error');
+        return;
+      }
+
+      const token = getAuthToken();
+      const url = isEdit ? `/api/admin/schemes/${schemeId}` : '/api/admin/schemes';
+      const method = isEdit ? 'PUT' : 'POST';
+
+      try {
+        const res = await fetch(url, {
+          method,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(schemePayload)
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.message || 'Operation failed');
+        }
+
+        showToast(isEdit ? 'Scheme updated successfully!' : 'Scheme added and published to citizen portal!', 'success');
+        closeSchemeEditorModal();
+        await loadAdminSchemes();
+        await loadAdminMetrics();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // Delete Scheme
+    async function deleteScheme(schemeId, schemeName) {
+      if (!confirm(`Are you sure you want to delete scheme "${schemeName}"?`)) {
+        return;
+      }
+
+      const token = getAuthToken();
+      try {
+        const res = await fetch(`/api/admin/schemes/${schemeId}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.message || 'Failed to delete scheme');
+        }
+
+        showToast(`Scheme "${schemeName}" deleted.`, 'info');
+        await loadAdminSchemes();
+        await loadAdminMetrics();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (verifyAdminAccess()) {
+        loadAdminMetrics();
+        loadAdminSchemes();
+      }
+    });
+  </script>
+</body>
+</html>

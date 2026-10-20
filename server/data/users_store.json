@@ -1,0 +1,161 @@
+[
+  {
+    "id": "usr-admin-01",
+    "name": "Dr. S. Kabilan (TN Welfare Admin)",
+    "email": "admin@tamilnadugov.in",
+    "mobile": "9876543210",
+    "passwordHash": "$2a$10$I9HQi9pwvrLcTA7svzPT3.SrvVtLOyJP2wARJ/WkFfnx2pNLkR7fO",
+    "preferredLanguage": "ta",
+    "role": "ADMIN",
+    "profile": {
+      "name": "Dr. S. Kabilan",
+      "age": 42,
+      "gender": "MALE",
+      "state": "Tamil Nadu",
+      "district": "Chennai",
+      "taluk": "Mylapore",
+      "village": "RA Puram",
+      "annualIncome": 650000,
+      "occupation": "Government Employee",
+      "isStudent": false,
+      "community": "BC",
+      "hasDisability": false
+    },
+    "savedSchemes": [
+      "tn-cmchis-health-insurance",
+      "tn-needs-entrepreneur"
+    ],
+    "createdAt": "2026-08-17T16:20:22.800Z"
+  },
+  {
+    "id": "usr-citizen-01",
+    "name": "Kavitha Selvam",
+    "email": "kavitha@example.com",
+    "mobile": "9443322110",
+    "passwordHash": "$2a$10$Mzx7EqODW/wvkolvIGaydeJt4YrX/dvfeXjjTdjire.fv4h4lS9lG",
+    "preferredLanguage": "ta",
+    "role": "CITIZEN",
+    "profile": {
+      "name": "Kavitha Selvam",
+      "age": 20,
+      "gender": "FEMALE",
+      "dateOfBirth": "2006-04-15",
+      "state": "Tamil Nadu",
+      "district": "Madurai",
+      "taluk": "Madurai North",
+      "village": "Tallakulam",
+      "annualIncome": 180000,
+      "occupation": "Student",
+      "employmentStatus": "Unemployed",
+      "bplStatus": true,
+      "isStudent": true,
+      "currentEducation": "UG",
+      "collegeCourse": "B.Sc Computer Science",
+      "studiedInGovtSchool6to12": true,
+      "isFirstGraduateInFamily": true,
+      "community": "MBC",
+      "caste": "Vanniyar",
+      "religion": "Hindu",
+      "hasDisability": false,
+      "maritalStatus": "Unmarried",
+      "hasLandholding": true
+    },
+    "savedSchemes": [
+      "tn-pudhumai-penn-scheme",
+      "tn-first-graduate-tuition",
+      "tn-post-matric-scholarship"
+    ],
+    "createdAt": "2026-08-17T16:20:22.882Z"
+  },
+  {
+    "id": "usr-75f51ec8-b4fe-445a-947a-fa82a5327e4d",
+    "name": "adthi",
+    "email": "sathyapriyans39@gmail.com",
+    "mobile": "345788008654",
+    "passwordHash": "$2a$10$rkmIyXmh8tyAtGEfOjza..SHDSxhoj2uGjpT.CNENk25XrJ7cEzFm",
+    "preferredLanguage": "en",
+    "role": "CITIZEN",
+    "profile": {
+      "name": "adthi",
+      "age": 22,
+      "gender": "FEMALE",
+      "state": "Tamil Nadu",
+      "district": "Chennai",
+      "annualIncome": 200000,
+      "occupation": "Student",
+      "isStudent": true,
+      "studiedInGovtSchool6to12": true,
+      "isFirstGraduateInFamily": false,
+      "community": "BC",
+      "hasDisability": false
+    },
+    "savedSchemes": [],
+    "createdAt": "2026-08-17T16:32:53.755Z"
+  },
+  {
+    "id": "usr-f3d8725d",
+    "name": "deepak",
+    "email": "deepak@mail.com",
+    "mobile": "9884113847",
+    "passwordHash": "$2a$10$3G3R.TdegA1dEAL/fIav4e1g0mxUJwwfsD7nWoXrpIAkqSikVr7ue",
+    "role": "CITIZEN",
+    "preferredLanguage": "ta",
+    "profile": {
+      "name": "deepak",
+      "age": 22,
+      "gender": "FEMALE",
+      "state": "Tamil Nadu",
+      "district": "Chennai",
+      "annualIncome": 200000,
+      "occupation": "Student",
+      "isStudent": true,
+      "community": "BC"
+    },
+    "savedSchemes": [],
+    "createdAt": "2026-10-16T09:26:30.845Z"
+  },
+  {
+    "id": "usr-93d0d1ed",
+    "name": "Test Citizen",
+    "email": "testuser_1792497910632@example.com",
+    "mobile": "9876543210",
+    "passwordHash": "$2a$10$t3rTS4M/zBC1FfXFlSPF8OBegVBOkPma2qFwErsKQauDLTxX9i64a",
+    "role": "CITIZEN",
+    "preferredLanguage": "ta",
+    "profile": {
+      "name": "Test Citizen",
+      "age": 22,
+      "gender": "FEMALE",
+      "state": "Tamil Nadu",
+      "district": "Salem",
+      "annualIncome": 200000,
+      "occupation": "Student",
+      "isStudent": true,
+      "community": "BC"
+    },
+    "savedSchemes": [],
+    "createdAt": "2026-10-20T12:05:10.769Z"
+  },
+  {
+    "id": "usr-02248afa",
+    "name": "Murugan K",
+    "email": "citizen_1792501370232@example.com",
+    "mobile": "9840123456",
+    "passwordHash": "$2a$10$HVi382SP88n.B7tjaRG6luKZKl4aQtlbRwVvMosKvdlxisL82VMQq",
+    "role": "CITIZEN",
+    "preferredLanguage": "ta",
+    "profile": {
+      "name": "Murugan K",
+      "age": 22,
+      "gender": "FEMALE",
+      "state": "Tamil Nadu",
+      "district": "Madurai",
+      "annualIncome": 200000,
+      "occupation": "Farmer",
+      "isStudent": false,
+      "community": "BC"
+    },
+    "savedSchemes": [],
+    "createdAt": "2026-10-20T13:02:50.312Z"
+  }
+]
